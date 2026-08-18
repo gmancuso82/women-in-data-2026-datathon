@@ -2,9 +2,11 @@
 
 ## Current exploration
 
-Our starting direction is healthy-diet affordability across countries, using a nutrition and economic lens.
+Gina - My starting direction is healthy diet affordability across countries, using a nutrition and economic lens.
+I am also going to explore the nutrition trade-off question - 
+  Where is sufficient food energy available but diet quality or micronutrient adequacy still weak?
 
-The nutrition trade-off question is preserved as a backup hypothesis for later comparison.
+Lastly, I think we all will come up with a 3rd question to look at once we see where the data leads us. 
 
 ## Project structure
 
