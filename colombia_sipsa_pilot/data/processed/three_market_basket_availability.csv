@@ -1,0 +1,12 @@
+item,food_group,basket_role,2025-02-12,2025-02-12,2025-02-12,2025-05-14,2025-05-14,2025-05-14,2025-08-13,2025-08-13,2025-08-13,2025-11-12,2025-11-12,2025-11-12,city_date_observations,included_in_three_market_shared_basket
+,,,Bogotá,Medellín,Montería,Bogotá,Medellín,Montería,Bogotá,Medellín,Montería,Bogotá,Medellín,Montería,,
+Aguacate,Fruit,Fruit variety and dietary fat,True,True,True,True,True,True,True,True,True,True,True,False,11,False
+Ahuyama,Vegetables,Vegetable variety,True,True,True,True,True,True,True,True,True,True,True,True,12,True
+Banano,Fruit,Common fruit,True,True,True,True,True,True,True,True,True,True,True,True,12,True
+Cebolla cabezona blanca,Vegetables,Cooking base,True,True,True,True,True,True,True,True,True,True,True,True,12,True
+Chócolo mazorca,Vegetables,Fresh corn starch,True,True,True,True,True,True,True,True,True,True,True,True,12,True
+Guayaba,Fruit,Fruit variety,True,True,False,True,True,False,True,True,False,True,True,False,8,False
+Naranja,Fruit,Fruit variety,True,True,True,True,True,True,True,True,True,True,True,True,12,True
+Tomate,Vegetables,Vegetable variety,True,True,True,True,True,True,True,True,True,True,True,True,12,True
+Yuca,Tubers and plantains,Root starch,True,True,True,True,True,True,True,True,True,True,True,True,12,True
+Zanahoria,Vegetables,Vegetable variety,True,True,True,True,True,True,True,True,True,True,True,True,12,True

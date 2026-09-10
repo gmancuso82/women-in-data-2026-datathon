@@ -28,6 +28,9 @@ MONTHS = {
 MARKETS = {
     "Bogotá": {"match": "Bogotá", "market": "Corabastos"},
     "Medellín": {"match": "Medellín", "market": "Central Mayorista de Antioquia (CMA)"},
+    # The February source names only the city; later daily files identify
+    # Mercado del Sur. Matching the city retains the same SIPSA series.
+    "Montería": {"match": "Montería", "market": "SIPSA Montería (Mercado del Sur in later files)"},
 }
 
 

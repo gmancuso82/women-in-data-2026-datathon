@@ -35,6 +35,22 @@ function renderAction() {
   document.querySelector("#nutrition-table").innerHTML = `<div class="nutrition-row"><span></span><strong>${action.higher}</strong><strong>${action.lower}</strong></div>${nutrientRows(higherNutrition, lowerNutrition)}`;
 }
 
+function renderThreeMarketValidation() {
+  const rows = data.threeMarket.totals
+    .filter((row) => row.date === dateSelect.value)
+    .sort((a, b) => a.total - b.total);
+  const lowest = rows[0].total;
+  const highest = rows[rows.length - 1].total;
+  document.querySelector("#shared-basket-copy").textContent =
+    `${data.threeMarket.foodCount}-food shared basket on ${formatDate(dateSelect.value)}. ` +
+    `${data.threeMarket.excludedFoods.join(" and ")} are excluded because they were not observed in every market on every date.`;
+  document.querySelector("#market-total-cards").innerHTML = rows.map((row) => {
+    const position = row.total === lowest ? "lowest" : row.total === highest ? "highest" : "middle";
+    const label = position === "lowest" ? "Lowest observed total" : position === "highest" ? "Highest observed total" : "Middle observed total";
+    return `<article class="market-total-card ${position}"><span>${row.city}</span><strong>${money.format(row.total)}</strong><small>${label}</small></article>`;
+  }).join("");
+}
+
 function renderChart() {
   const max = Math.max(...data.actions.map((row) => row.savings));
   const byDate = unique(data.actions.map((row) => row.date));
@@ -52,6 +68,10 @@ document.querySelector("#largest-saving").textContent = money.format(Math.max(..
 document.querySelector("#rule-statement").textContent = data.rule.statement;
 document.querySelector("#source-label").textContent = data.sourceLabel;
 marketSelect.addEventListener("change", renderAction);
-dateSelect.addEventListener("change", renderAction);
+dateSelect.addEventListener("change", () => {
+  renderAction();
+  renderThreeMarketValidation();
+});
 renderAction();
+renderThreeMarketValidation();
 renderChart();

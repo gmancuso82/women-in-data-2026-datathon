@@ -19,5 +19,15 @@ window.MONITOR_DATA = {
     vitaminAThreshold:1000,
     fiberThreshold:0.8,
     statement:"Potential lower-cost alternative: the lower-priced food meets the pilot role guardrails for vitamin A and fibre. This is a decision-support prompt, not dietary advice."
+  },
+  threeMarket: {
+    foodCount: 8,
+    excludedFoods: ["Aguacate", "Guayaba"],
+    totals: [
+      {date:"2025-02-12", city:"Bogotá", total:18301}, {date:"2025-02-12", city:"Medellín", total:15297}, {date:"2025-02-12", city:"Montería", total:14084},
+      {date:"2025-05-14", city:"Bogotá", total:18447}, {date:"2025-05-14", city:"Medellín", total:17461}, {date:"2025-05-14", city:"Montería", total:15686},
+      {date:"2025-08-13", city:"Bogotá", total:22357}, {date:"2025-08-13", city:"Medellín", total:18555}, {date:"2025-08-13", city:"Montería", total:17343},
+      {date:"2025-11-12", city:"Bogotá", total:18895}, {date:"2025-11-12", city:"Medellín", total:14717}, {date:"2025-11-12", city:"Montería", total:15236}
+    ]
   }
 };
