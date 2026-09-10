@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Local Healthy Food Swap Monitor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <p class="eyebrow">COLOMBIA SIPSA PILOT</p>
+        <h1>Local Healthy Food Swap Monitor</h1>
+        <p class="lede">A prototype that turns local food-market price differences into nutrition-aware, reviewable actions.</p>
+      </header>
+
+      <section class="summary-grid" aria-label="Pilot summary">
+        <article><span class="metric-label">Observed locality-dates</span><strong id="observation-count">8</strong><span>orange-vegetable comparisons</span></article>
+        <article><span class="metric-label">Largest possible saving</span><strong id="largest-saving">COP 1,358</strong><span>per kg in Bogotá, August</span></article>
+        <article><span class="metric-label">Nutrition status</span><strong>Verified</strong><span>TCAC profiles for carrot and ahuyama</span></article>
+      </section>
+
+      <section class="controls" aria-label="Choose an observation">
+        <div>
+          <label for="market-select">Locality</label>
+          <select id="market-select"></select>
+        </div>
+        <div>
+          <label for="date-select">Collection date</label>
+          <select id="date-select"></select>
+        </div>
+      </section>
+
+      <section class="action-panel">
+        <div class="panel-heading">
+          <p class="eyebrow">PRICE ACTION</p>
+          <h2 id="action-title">Potential lower-cost alternative</h2>
+          <p id="action-copy"></p>
+        </div>
+        <div class="price-comparison">
+          <article class="price-card high"><span>Higher-priced food</span><h3 id="higher-food"></h3><strong id="higher-price"></strong></article>
+          <div class="arrow" aria-hidden="true">→</div>
+          <article class="price-card low"><span>Potential alternative</span><h3 id="lower-food"></h3><strong id="lower-price"></strong></article>
+          <article class="savings"><span>Possible saving</span><strong id="saving"></strong><span>per market kg</span></article>
+        </div>
+      </section>
+
+      <section class="two-column">
+        <article class="panel">
+          <p class="eyebrow">NUTRITION TRADEOFF</p>
+          <h2>Per 100 g edible portion</h2>
+          <p class="subtle">The display compares food profiles. It does not declare foods nutritionally identical.</p>
+          <div id="nutrition-table" class="nutrition-table"></div>
+        </article>
+        <article class="panel guardrail">
+          <p class="eyebrow">ROLE GUARDRAILS</p>
+          <h2>Why this suggestion appears</h2>
+          <p id="rule-statement"></p>
+          <dl>
+            <div><dt>Vitamin A</dt><dd>At least 1,000 ER per 100 g</dd></div>
+            <div><dt>Fibre</dt><dd>At least 0.8 g per 100 g</dd></div>
+            <div><dt>Human review</dt><dd>Required before any policy decision</dd></div>
+          </dl>
+        </article>
+      </section>
+
+      <section class="panel">
+        <p class="eyebrow">PRICE PATTERN</p>
+        <h2>Potential savings by locality and date</h2>
+        <div id="saving-chart" class="saving-chart" aria-label="Bar chart of potential savings"></div>
+      </section>
+
+      <section class="two-column">
+        <article class="panel limitation">
+          <p class="eyebrow">DATA-QUALITY GATE</p>
+          <h2>Fresh corn is not yet a swap option</h2>
+          <p>SIPSA prices may refer to a whole cob, while nutrition may refer to edible kernels. The monitor blocks cost-per-nutrient claims until the price and nutrition units describe the same edible amount.</p>
+        </article>
+        <article class="panel source-note">
+          <p class="eyebrow">WHAT THIS IS</p>
+          <h2>A local price-monitoring prototype</h2>
+          <p>These are wholesale food-market observations, not household retail prices and not a subnational Cost of a Healthy Diet estimate.</p>
+          <p class="subtle" id="source-label"></p>
+        </article>
+      </section>
+    </main>
+    <script src="dashboard_data.js"></script>
+    <script src="dashboard.js"></script>
+  </body>
+</html>
