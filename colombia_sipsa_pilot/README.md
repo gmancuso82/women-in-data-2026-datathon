@@ -5,3 +5,5 @@ This is a safe working copy for the Women in Data datathon pilot. It turns four 
 The output is a fresh-food market-price proxy, not an official retail Cost of a Healthy Diet (CoHD) estimate.
 
 Selected source dates: 12 February, 14 May, 13 August, and 12 November 2025.
+
+`UPLOAD_TESTS.md` documents the dashboard's local PDF intake proof of concept and its two synthetic test fixtures.

@@ -28,6 +28,47 @@
         <p class="subtle">This section uses only foods observed in Bogotá, Medellín, and Montería on every sampled date. It is a wholesale price proxy, not a retail CoHD calculation.</p>
       </section>
 
+      <section class="panel intake-panel" aria-labelledby="intake-heading">
+        <div class="intake-heading">
+          <div>
+            <p class="eyebrow">LOCAL PRICE-SHEET INTAKE</p>
+            <h2 id="intake-heading">Add more current local evidence</h2>
+            <p class="subtle">Upload a searchable or scanned PDF price sheet. The prototype extracts what it can, then asks a person to review the fields before local use.</p>
+          </div>
+          <span class="local-only">This browser only</span>
+        </div>
+        <div class="upload-callout">
+          <label class="file-picker" for="price-sheet-input">
+            <span>Choose a local price-sheet PDF</span>
+            <input id="price-sheet-input" type="file" accept="application/pdf,.pdf" />
+          </label>
+          <p id="upload-status" class="subtle" aria-live="polite">No file is uploaded. Nothing is sent to a server.</p>
+          <p class="sample-links">Repeatable test files: <a href="../test_files/digital_price_sheet.pdf" target="_blank">digital PDF</a> and <a href="../test_files/scanned_price_sheet.pdf" target="_blank">scanned-style PDF</a>.</p>
+        </div>
+
+        <div id="upload-review" class="upload-review" hidden>
+          <div class="review-banner"><strong>Price received; nutrition match still needs review.</strong><span id="review-method"></span></div>
+          <div class="review-meta">
+            <label>Locality<input id="review-locality" placeholder="Required" /></label>
+            <label>Collection date<input id="review-date" type="date" /></label>
+            <label>Market / source<input id="review-market" placeholder="Optional but useful" /></label>
+          </div>
+          <div class="review-table-wrap">
+            <table class="review-table">
+              <thead><tr><th>Food</th><th>Unit</th><th>Price (COP)</th><th>Nutrition status</th></tr></thead>
+              <tbody id="review-rows"></tbody>
+            </table>
+          </div>
+          <div class="review-actions">
+            <button id="approve-upload" class="primary-button" type="button">Save reviewed observations on this device</button>
+            <button id="download-uploads" class="secondary-button" type="button">Download saved observations</button>
+            <button id="clear-uploads" class="text-button" type="button">Clear this device’s saved observations</button>
+          </div>
+          <p id="review-help" class="subtle">Required before saving: locality, collection date, food name, price, and unit. The PDF itself is not retained; only approved structured observations can be saved in this browser.</p>
+        </div>
+        <p id="saved-upload-summary" class="saved-upload-summary" aria-live="polite"></p>
+      </section>
+
       <section class="controls" aria-label="Choose an observation">
         <div>
           <label for="market-select">Locality</label>
@@ -92,6 +133,8 @@
         </article>
       </section>
     </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <script src="dashboard_data.js"></script>
     <script src="dashboard.js"></script>
   </body>
