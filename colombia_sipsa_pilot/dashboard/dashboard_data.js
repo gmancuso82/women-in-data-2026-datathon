@@ -3,12 +3,16 @@ window.MONITOR_DATA = {
   actions: [
     {date:"2025-02-12", market:"Bogotá", higher:"Zanahoria", higherPrice:2177, lower:"Ahuyama", lowerPrice:1675, savings:502},
     {date:"2025-02-12", market:"Medellín", higher:"Ahuyama", higherPrice:1025, lower:"Zanahoria", lowerPrice:1022, savings:3},
+    {date:"2025-02-12", market:"Montería", higher:"Zanahoria", higherPrice:1528, lower:"Ahuyama", lowerPrice:900, savings:628},
     {date:"2025-05-14", market:"Bogotá", higher:"Ahuyama", higherPrice:1875, lower:"Zanahoria", lowerPrice:1750, savings:125},
     {date:"2025-05-14", market:"Medellín", higher:"Ahuyama", higherPrice:925, lower:"Zanahoria", lowerPrice:911, savings:14},
+    {date:"2025-05-14", market:"Montería", higher:"Zanahoria", higherPrice:1417, lower:"Ahuyama", lowerPrice:900, savings:517},
     {date:"2025-08-13", market:"Bogotá", higher:"Zanahoria", higherPrice:4271, lower:"Ahuyama", lowerPrice:2913, savings:1358},
     {date:"2025-08-13", market:"Medellín", higher:"Zanahoria", higherPrice:1972, lower:"Ahuyama", lowerPrice:1750, savings:222},
+    {date:"2025-08-13", market:"Montería", higher:"Zanahoria", higherPrice:2806, lower:"Ahuyama", lowerPrice:1675, savings:1131},
     {date:"2025-11-12", market:"Bogotá", higher:"Zanahoria", higherPrice:2000, lower:"Ahuyama", lowerPrice:1900, savings:100},
-    {date:"2025-11-12", market:"Medellín", higher:"Zanahoria", higherPrice:2167, lower:"Ahuyama", lowerPrice:950, savings:1217}
+    {date:"2025-11-12", market:"Medellín", higher:"Zanahoria", higherPrice:2167, lower:"Ahuyama", lowerPrice:950, savings:1217},
+    {date:"2025-11-12", market:"Montería", higher:"Zanahoria", higherPrice:2611, lower:"Ahuyama", lowerPrice:1500, savings:1111}
   ],
   nutrients: {
     "Zanahoria": {energy:47, protein:0.7, fiber:0.8, iron:0.4, calcium:27, vitaminA:1318, vitaminC:3, tcac:"B110 — Zanahoria, sin cáscara, cruda"},
