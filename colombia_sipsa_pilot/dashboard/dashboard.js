@@ -61,8 +61,24 @@ function renderChart() {
   }).join("");
 }
 
+const naira = new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN", maximumFractionDigits: 0 });
+const nigeriaSelect = document.querySelector("#nigeria-item-select");
+
+function renderNigeriaValidation() {
+  const rows = data.nigeriaValidation.ranges.filter((row) => row.item === nigeriaSelect.value);
+  document.querySelector("#nigeria-ranges").innerHTML = rows.map((row) => `
+    <article class="nigeria-range">
+      <time>${formatDate(row.date)}</time>
+      <strong>${naira.format(row.gap)} gap</strong>
+      <p>Low: ${naira.format(row.low)} in ${row.lowZone}</p>
+      <p>High: ${naira.format(row.high)} in ${row.highZone}</p>
+      <p class="subtle">${row.gapPct.toFixed(1)}% of the lowest zone average for ${row.unit}</p>
+    </article>`).join("");
+}
+
 populateSelect(marketSelect, unique(data.actions.map((row) => row.market)));
 populateSelect(dateSelect, unique(data.actions.map((row) => row.date)));
+populateSelect(nigeriaSelect, unique(data.nigeriaValidation.ranges.map((row) => row.item)));
 document.querySelector("#observation-count").textContent = data.actions.length;
 document.querySelector("#largest-saving").textContent = money.format(Math.max(...data.actions.map((row) => row.savings)));
 document.querySelector("#rule-statement").textContent = data.rule.statement;
@@ -72,9 +88,11 @@ dateSelect.addEventListener("change", () => {
   renderAction();
   renderThreeMarketValidation();
 });
+nigeriaSelect.addEventListener("change", renderNigeriaValidation);
 renderAction();
 renderThreeMarketValidation();
 renderChart();
+renderNigeriaValidation();
 
 // Local upload prototype -----------------------------------------------------
 // These fields are deliberately stored only in this browser after the user

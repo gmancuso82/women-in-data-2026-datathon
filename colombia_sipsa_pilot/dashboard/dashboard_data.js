@@ -29,5 +29,17 @@ window.MONITOR_DATA = {
       {date:"2025-08-13", city:"Bogotá", total:22357}, {date:"2025-08-13", city:"Medellín", total:18555}, {date:"2025-08-13", city:"Montería", total:17343},
       {date:"2025-11-12", city:"Bogotá", total:18895}, {date:"2025-11-12", city:"Medellín", total:14717}, {date:"2025-11-12", city:"Montería", total:15236}
     ]
+  },
+  nigeriaValidation: {
+    sourceLabel: "Nigeria National Bureau of Statistics, Selected Food Price Watch, Zone All item sheets",
+    geographyLevel: "Zone-level monthly average",
+    ranges: [
+      {date:"2026-03-01", item:"Beans Brown", unit:"1 kg", low:851.11, lowZone:"North West", high:1770.57, highZone:"South West", gap:919.46, gapPct:108.0},
+      {date:"2026-04-01", item:"Beans Brown", unit:"1 kg", low:871.79, lowZone:"North East", high:1787.09, highZone:"South West", gap:915.30, gapPct:105.0},
+      {date:"2026-05-01", item:"Beans Brown", unit:"1 kg", low:876.46, lowZone:"North East", high:1790.71, highZone:"South West", gap:914.25, gapPct:104.3},
+      {date:"2026-03-01", item:"Garri white", unit:"1 kg", low:670.16, lowZone:"North Central", high:942.68, highZone:"South South", gap:272.52, gapPct:40.7},
+      {date:"2026-04-01", item:"Garri white", unit:"1 kg", low:673.88, lowZone:"North Central", high:944.58, highZone:"South East", gap:270.70, gapPct:40.2},
+      {date:"2026-05-01", item:"Garri white", unit:"1 kg", low:676.21, lowZone:"North Central", high:947.08, highZone:"South East", gap:270.86, gapPct:40.1}
+    ]
   }
 };
