@@ -15,6 +15,10 @@ The prototype currently loads open-source PDF/OCR tools when it opens. For a low
 
 The dashboard displays a **price comparison**, not cost per nutrient. It blocks fresh-corn recommendations because the market-product and edible-nutrition units have not yet been reconciled.
 
+## Public preview
+
+The GitHub Pages workflow publishes this dashboard for live review. Its browser-based PDF/OCR tools load when the dashboard opens.
+
 Before presenting the pilot, rerun these two scripts after changing price or nutrition data:
 
 ```bash
