@@ -68,7 +68,7 @@ python3 forms/train_digit_classifier.1.0.py labels/price_labels.csv models/digit
 Both print an honest accuracy estimate before saving. See each script's
 docstring for how the classifier works and its current limitations.
 
-## References: 
+## References 
 - [The State of Food Security and Nutrition in the World (FAO flagship page)](https://www.fao.org/publications/fao-flagship-publications/the-state-of-food-security-and-nutrition-in-the-world/en)
 - [2.3 Cost and affordability of a healthy diet: an update (SOFI 2022, FAO)](https://openknowledge.fao.org/server/api/core/bitstreams/6ca1510c-9341-4d6a-b285-5f5e8743cc46/content/sofi-2022/cost-affordability-healthy-diet.html)
 - [Cost and Affordability of a Healthy Diet (CoAHD) — ANH Academy Data4Diets](https://www.anh-academy.org/data4diets/indicator/cost-and-affordability-healthy-diet-coahd)
