@@ -56,7 +56,7 @@ function renderChart() {
   const byDate = unique(data.actions.map((row) => row.date));
   document.querySelector("#saving-chart").innerHTML = byDate.map((date) => {
     const rows = data.actions.filter((row) => row.date === date);
-    const bars = rows.map((row) => `<div class="bar ${row.market.toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g, "")}" style="height:${Math.max(4, row.savings / max * 150)}px"><span>${row.savings.toLocaleString()}</span></div>`).join("");
+    const bars = rows.map((row) => `<div class="bar ${row.market.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}" style="height:${Math.max(4, row.savings / max * 150)}px"><span>${row.savings.toLocaleString()}</span></div>`).join("");
     return `<div class="chart-group">${bars}<div class="bar-label">${formatDate(date)}<br>Bogotá · Medellín · Montería</div></div>`;
   }).join("");
 }
