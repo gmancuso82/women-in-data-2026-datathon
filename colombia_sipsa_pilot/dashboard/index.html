@@ -64,6 +64,28 @@
           <article class="price-card low"><span>Potential alternative</span><h3 id="lower-food"></h3><strong id="lower-price"></strong></article>
           <article class="savings"><span>Possible saving</span><strong id="saving"></strong><span>per market kg</span></article>
         </div>
+        <div class="impact-calculator" aria-labelledby="impact-heading">
+          <div>
+            <p class="eyebrow">PROCUREMENT SCENARIO</p>
+            <h3 id="impact-heading">Translate the price difference into a planning estimate</h3>
+            <p id="impact-copy" class="subtle"></p>
+          </div>
+          <div class="impact-input">
+            <label for="quantity-input">Quantity (market kg)</label>
+            <input id="quantity-input" type="number" inputmode="numeric" min="1" max="100000" step="1" value="100" />
+            <div class="quantity-presets" aria-label="Suggested quantities">
+              <button type="button" data-quantity="50">50 kg</button>
+              <button type="button" data-quantity="100">100 kg</button>
+              <button type="button" data-quantity="500">500 kg</button>
+            </div>
+          </div>
+          <div class="impact-result">
+            <span>Potential gross price difference</span>
+            <strong id="impact-saving"></strong>
+            <small id="impact-unit"></small>
+          </div>
+        </div>
+        <p class="impact-note"><strong>Decision boundary:</strong> this is a price-only planning estimate. It excludes availability, yields, transport, contracts, and dietary planning; human review remains required.</p>
       </section>
 
       <section class="two-column">

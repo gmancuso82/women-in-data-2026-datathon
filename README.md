@@ -26,6 +26,7 @@ The current dashboard demonstrates the decision layer with historical, official 
 - Four sampled dates in 2025
 - An eight-food shared basket directly comparable across all three markets
 - A transparent price-and-nutrition comparison for the verified carrot and ahuyama orange-vegetable role
+- An interactive procurement-scenario calculator that scales the selected per-kilogram price difference to a user-entered quantity, while keeping its price-only boundary explicit
 
 These are wholesale price observations and an equal-weight reference basket. They are **not** household retail prices or a subnational Cost of a Healthy Diet calculation.
 
@@ -45,6 +46,7 @@ The collection pipeline supports digital and printable-paper intake, scan/photo 
 
 - The dashboard does not diagnose shortages, weather events, or supply-chain causes.
 - A lower-cost candidate is not an automatic food substitution or dietary recommendation.
+- The procurement scenario is a gross price-difference estimate; it excludes availability, yields, transport, contracts, and dietary planning.
 - Nutrition and program experts remain responsible for policy and program decisions.
 - Foods without verified nutrition matches stay in a review state rather than generating a recommendation.
 

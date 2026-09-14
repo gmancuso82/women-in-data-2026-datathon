@@ -22,16 +22,16 @@ Three Nigeria National Bureau of Statistics Selected Food Price Watch releases f
 
 ### Nutrition
 
-Carrot and ahuyama have verified ICBF TCAC raw edible-portion matches in the pilot. The dashboard displays energy, protein, fibre, iron, calcium, vitamin A, and vitamin C per 100 g and applies a documented orange-vegetable role guardrail. It presents a reviewable candidate, not a claim that foods are nutritionally identical.
+Carrot and ahuyama have verified ICBF TCAC raw edible-portion matches in the pilot. The dashboard displays energy, protein, fibre, iron, calcium, vitamin A, and vitamin C per 100 g and applies a documented orange-vegetable role guardrail. It presents a reviewable candidate, not a claim that foods are nutritionally identical. Its procurement-scenario calculator scales the selected observed price difference to a user-entered market quantity; it is a price-only planning estimate, not a completed procurement analysis.
 
 ## Interpretation limits
 
 - Price differences are observations, not causal evidence about transport, weather, shortages, or policy.
 - A food-price signal can prompt investigation; it is not a diagnosis of a disruption.
 - A lower-cost candidate is not medical, dietary, or procurement advice.
+- The quantity calculator excludes availability, yields, transport, contracts, waste, and dietary planning.
 - The dashboard does not currently store or automatically ingest new collection submissions.
 
 ## Next integration step
 
 Export a reviewer-approved record from the collection pipeline to the monitoring schema, retain source and review metadata, and refresh the dashboard from that verified dataset. Any production deployment would also require country governance, retention rules, privacy controls, local catalog validation, multilingual testing, and auditability.
-

@@ -10,7 +10,7 @@ The three-market comparison uses an equal-weight basket of eight foods observed 
 
 ## Nutrition-aware action prompt
 
-The dashboard includes one verified pilot role: carrot and ahuyama as orange vegetables. A lower-cost candidate appears only when the item meets the documented vitamin A and fibre guardrails. The dashboard shows the nutrition tradeoff and requires human review; it does not provide dietary advice or an automatic substitution.
+The dashboard includes one verified pilot role: carrot and ahuyama as orange vegetables. A lower-cost candidate appears only when the item meets the documented vitamin A and fibre guardrails. The dashboard shows the nutrition tradeoff and requires human review; it does not provide dietary advice or an automatic substitution. Its quantity calculator translates the selected per-kilogram difference into a potential gross price difference for a planning quantity; it excludes availability, yields, transport, contracts, and diet planning.
 
 ## Nigeria portability validation
 
@@ -27,4 +27,3 @@ The public dashboard is a historical-data decision-support prototype. The separa
 - [`data/nutrition_lookup.csv`](data/nutrition_lookup.csv) — nutrition match status and source notes.
 - [`dashboard/`](dashboard/) — static dashboard published through GitHub Pages.
 - [`src/`](src/) — reproducible data-build and analysis scripts.
-

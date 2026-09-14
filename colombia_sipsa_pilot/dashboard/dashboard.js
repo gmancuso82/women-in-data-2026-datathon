@@ -5,6 +5,7 @@ const unique = (items) => [...new Set(items)];
 
 const marketSelect = document.querySelector("#market-select");
 const dateSelect = document.querySelector("#date-select");
+const quantityInput = document.querySelector("#quantity-input");
 
 function populateSelect(select, values) {
   select.innerHTML = values.map((value) => `<option value="${value}">${value.includes("-") ? formatDate(value) : value}</option>`).join("");
@@ -33,6 +34,23 @@ function renderAction() {
   document.querySelector("#lower-price").textContent = `${money.format(action.lowerPrice)} / kg`;
   document.querySelector("#saving").textContent = money.format(action.savings);
   document.querySelector("#nutrition-table").innerHTML = `<div class="nutrition-row"><span></span><strong>${action.higher}</strong><strong>${action.lower}</strong></div>${nutrientRows(higherNutrition, lowerNutrition)}`;
+  renderImpactCalculator(action);
+}
+
+function planningQuantity() {
+  const entered = Number(quantityInput.value);
+  const quantity = Number.isFinite(entered) ? Math.min(100000, Math.max(1, Math.round(entered))) : 1;
+  quantityInput.value = quantity;
+  return quantity;
+}
+
+function renderImpactCalculator(action) {
+  const quantity = planningQuantity();
+  const grossDifference = action.savings * quantity;
+  document.querySelector("#impact-copy").textContent =
+    `For ${quantity.toLocaleString()} market kg of ${action.higher}, the selected ${action.market} observation suggests ${action.lower} could have a lower observed commodity price.`;
+  document.querySelector("#impact-saving").textContent = money.format(grossDifference);
+  document.querySelector("#impact-unit").textContent = `${money.format(action.savings)} per kg × ${quantity.toLocaleString()} market kg`;
 }
 
 function renderThreeMarketValidation() {
@@ -89,6 +107,13 @@ dateSelect.addEventListener("change", () => {
   renderThreeMarketValidation();
 });
 nigeriaSelect.addEventListener("change", renderNigeriaValidation);
+quantityInput.addEventListener("input", renderAction);
+document.querySelectorAll("[data-quantity]").forEach((button) => {
+  button.addEventListener("click", () => {
+    quantityInput.value = button.dataset.quantity;
+    renderAction();
+  });
+});
 renderAction();
 renderThreeMarketValidation();
 renderChart();
