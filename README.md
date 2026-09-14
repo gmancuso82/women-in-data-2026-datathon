@@ -22,7 +22,7 @@ The project follows one feedback loop: childhood malnutrition and poverty reinfo
 6. **→ nutritional swaps enable resilience** — better data supports low-cost substitutions that help households absorb price shocks.
 7. **→ back to childhood nutrition** — closing the loop.
 
-![Analytic process diagram](outputs/analytic_process_diagram.png)
+![Analytic process diagram](data-collection-pipeline/Slide7.jpg)
 
 ## Project structure
 
