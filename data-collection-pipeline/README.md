@@ -1,4 +1,4 @@
-# Hoos' Cooking — Retail Food Price Data Pipeline
+# Hoos' Cooking — Retail Food Price Data Collection Pipeline
 
 Part of the WiD Datathon 2026 project. Collects real-time, subnational retail
 food price data in Nigeria and Colombia via a digital form or a printed
