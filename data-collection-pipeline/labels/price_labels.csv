@@ -1,0 +1,15 @@
+crop_path,field_type,form_id,food_group_id,item_id,extracted_value,true_value
+real_scan_v2/review/real_scan_star/price_starchy_staples_rice.png,price,real_scan_star,starchy_staples,rice,2.0,12
+real_scan_v2/review/real_scan_star/price_starchy_staples_potato_pastusa.png,price,real_scan_star,starchy_staples,potato_pastusa,,BLANK
+real_scan_v2/review/real_scan_star/price_starchy_staples_potato_criolla.png,price,real_scan_star,starchy_staples,potato_criolla,,34
+real_scan_v2/review/real_scan_star/price_starchy_staples_potato_superior.png,price,real_scan_star,starchy_staples,potato_superior,,BLANK
+real_scan_v2/review/real_scan_star/price_starchy_staples_plantain_green.png,price,real_scan_star,starchy_staples,plantain_green,,BLANK
+real_scan_v2/review/real_scan_star/price_starchy_staples_banana_guineo.png,price,real_scan_star,starchy_staples,banana_guineo,77.0,BLANK
+real_scan_v2/review/real_scan_star/price_starchy_staples_cassava_yuca.png,price,real_scan_star,starchy_staples,cassava_yuca,5.0,565
+real_scan_v2/review/real_scan_star/price_starchy_staples_arracacha.png,price,real_scan_star,starchy_staples,arracacha,,BLANK
+real_scan_v2/review/real_scan_star/price_starchy_staples_name_yam.png,price,real_scan_star,starchy_staples,name_yam,41.0,89.17
+real_scan_v2/review/real_scan_star/price_starchy_staples_corn_yellow.png,price,real_scan_star,starchy_staples,corn_yellow,4.0,BLANK
+real_scan_v2/review/real_scan_star/price_starchy_staples_corn_white.png,price,real_scan_star,starchy_staples,corn_white,2.0,77
+real_scan_v2/review/real_scan_star/price_starchy_staples_wheat_flour.png,price,real_scan_star,starchy_staples,wheat_flour,,BLANK
+real_scan_v2/review/real_scan_star/price_starchy_staples_pasta.png,price,real_scan_star,starchy_staples,pasta,6.0,BLANK
+real_scan_v2/review/real_scan_star/price_starchy_staples_arepa_flour.png,price,real_scan_star,starchy_staples,arepa_flour,,BLANK

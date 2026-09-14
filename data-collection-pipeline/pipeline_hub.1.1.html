@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hoos' Cooking — Pipeline Hub</title>
+<style>
+  :root {
+    --ink: #22201b; --sub: #6b6558; --line: #ddd8cc; --paper: #faf9f6; --card: #ffffff;
+    --accent: #2f6b4f; --accent-dark: #255a41; --accent-tint: #eef2ec;
+    --warn: #b5651d; --warn-tint: #fdf3ec;
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 24px 100px; background: var(--paper); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .tagline { color: var(--sub); font-size: 14px; margin-bottom: 20px; }
+
+  .demo-banner {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    background: var(--accent-tint); border: 1px solid #cfe0c8; border-radius: 10px;
+    padding: 14px 18px; margin-bottom: 28px;
+  }
+  .demo-banner .t { font-size: 14px; font-weight: 600; color: var(--accent-dark); }
+  .demo-banner .d { font-size: 13px; color: var(--sub); margin-top: 2px; }
+  .demo-banner a.open {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 13px; padding: 9px 16px; border-radius: 6px; font-weight: 600; white-space: nowrap;
+  }
+  .demo-banner a.open:hover { background: var(--accent-dark); }
+
+  .flow { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 36px; }
+  .flow-step {
+    flex: 1 1 150px; background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px 14px; font-size: 13px;
+  }
+  .flow-step .n {
+    display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px;
+    background: var(--accent); color: #fff; border-radius: 50%; font-size: 11px; font-weight: 700;
+    margin-right: 6px;
+  }
+  .flow-step .t { font-weight: 600; }
+  .flow-step .d { color: var(--sub); margin-top: 4px; }
+
+  section { margin-bottom: 30px; }
+  h2 { font-size: 16px; margin: 0 0 4px; display: flex; align-items: center; gap: 8px; }
+  h2 .num {
+    display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px;
+    background: var(--ink); color: #fff; border-radius: 50%; font-size: 12px; font-weight: 700;
+  }
+  .section-note { color: var(--sub); font-size: 13px; margin: 0 0 14px 30px; line-height: 1.5; }
+
+  .cards { display: flex; gap: 12px; flex-wrap: wrap; margin-left: 30px; }
+  .card {
+    flex: 1 1 300px; background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px;
+  }
+  .card h3 { font-size: 14px; margin: 0 0 6px; }
+  .card p { font-size: 13px; color: var(--sub); margin: 0 0 10px; line-height: 1.5; }
+  .card a.open {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 13px; padding: 7px 14px; border-radius: 6px; font-weight: 600;
+  }
+  .card a.open:hover { background: var(--accent-dark); }
+  .filelist { font-size: 12px; color: var(--sub); margin-top: 8px; }
+  .filelist a { color: var(--sub); }
+
+  .mode-toggle { margin: 0 0 8px 30px; display: inline-flex; background: var(--card);
+                 border: 1px solid var(--line); border-radius: 7px; padding: 3px; gap: 2px; }
+  .mode-btn { border: none; background: transparent; font-size: 12.5px; padding: 6px 12px;
+              border-radius: 5px; cursor: pointer; color: var(--sub); font-weight: 600; }
+  .mode-btn.active { background: var(--accent); color: #fff; }
+
+  .cmdblock {
+    margin: 10px 30px 0; background: #1c1a17; border-radius: 8px; overflow: hidden;
+  }
+  .cmdblock.hide { display: none; }
+  .cmdblock .label {
+    background: #262420; font-size: 11px; padding: 6px 12px; color: #cfc9ba;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .cmdblock pre {
+    margin: 0; padding: 12px; font-family: var(--mono); font-size: 12.5px; color: #f1efe7;
+    overflow-x: auto; white-space: pre;
+  }
+  .copy-btn {
+    background: #3a372e; color: #f1efe7; border: none; border-radius: 5px; font-size: 11px;
+    padding: 3px 9px; cursor: pointer;
+  }
+  .copy-btn:hover { background: #4a4636; }
+  .copy-btn.copied { background: var(--accent); }
+
+  details.notes {
+    margin-top: 40px; border: 1px solid var(--line); border-radius: 10px; background: var(--card);
+    padding: 4px 16px;
+  }
+  details.notes summary {
+    cursor: pointer; font-size: 13px; font-weight: 600; padding: 10px 0; color: var(--sub);
+  }
+  details.notes .body { padding: 4px 0 14px; }
+  .status-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 14px; }
+  .status { font-size: 12px; padding: 5px 10px; border-radius: 20px; font-weight: 600; }
+  .status.done { background: var(--accent-tint); color: var(--accent-dark); }
+  .status.manual { background: var(--warn-tint); color: var(--warn); }
+  details.notes .refs { font-size: 13px; margin: 0; padding-left: 18px; }
+  details.notes .refs a { color: var(--ink); }
+  details.notes .refs li { margin-bottom: 4px; }
+
+  footer { color: var(--sub); font-size: 12px; margin-top: 24px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Hoos' Cooking — Pipeline Hub</h1>
+  <div class="tagline">One index for the price-intake tools. Open this file from the same folder as the others so the links below work.</div>
+
+  <div class="demo-banner">
+    <div>
+      <div class="t">New here? See it work first.</div>
+      <div class="d">A real scan plus two sample ones, already processed — no terminal needed.</div>
+    </div>
+    <a class="open" href="demo/demo_review.html">Open the demo</a>
+  </div>
+
+  <div class="flow">
+    <div class="flow-step"><span class="n">1</span><span class="t">Collect</span><div class="d">Digital form or printed paper form</div></div>
+    <div class="flow-step"><span class="n">2</span><span class="t">Extract</span><div class="d">Scan/photo of a paper form → CSVs</div></div>
+    <div class="flow-step"><span class="n">3</span><span class="t">Review</span><div class="d">A human confirms or corrects</div></div>
+    <div class="flow-step"><span class="n">4</span><span class="t">Ingest</span><div class="d">Corrections become labeled examples</div></div>
+    <div class="flow-step"><span class="n">5</span><span class="t">Retrain</span><div class="d">Examples sharpen the two classifiers</div></div>
+  </div>
+
+  <section>
+    <h2><span class="num">1</span> Collect a submission</h2>
+    <div class="section-note">Two channels, same underlying schema. Use whichever fits the vendor.</div>
+    <div class="cards">
+      <div class="card">
+        <h3>Digital form</h3>
+        <p>A phone/tablet-friendly form. Exports JSON/CSV directly — nothing else to run.</p>
+        <a class="open" href="forms/market_price_intake.1.2.html">Open the form</a>
+      </div>
+      <div class="card">
+        <h3>Paper form</h3>
+        <p>Print, hand out, collect back as a photo or scan (mark the box with a star ★).</p>
+        <a class="open" href="forms/hoos_cooking_paper_form_NGA.1.2.pdf">Nigeria PDF</a>
+        &nbsp;
+        <a class="open" href="forms/hoos_cooking_paper_form_COL.1.2.pdf">Colombia PDF</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">2</span> Extract a paper scan</h2>
+    <div class="section-note">Run from a terminal, in this folder. Swap in the country's fieldmap and the actual scan filename(s).</div>
+
+    <div class="mode-toggle" data-group="extract">
+      <button class="mode-btn active" data-mode="single">One scan</button>
+      <button class="mode-btn" data-mode="batch">A folder of scans</button>
+    </div>
+    <div class="cmdblock" data-group="extract" data-mode="single">
+      <div class="label"><span>terminal</span><button class="copy-btn" onclick="copyCmd(this)">copy</button></div>
+      <pre>python3 forms/extract_paper_form.1.5.py &lt;scan.pdf&gt; forms/hoos_cooking_paper_form_COL.1.2_fieldmap.json schema/hoos_cooking_form_schema.1.2.json &lt;output_basename&gt;</pre>
+    </div>
+    <div class="cmdblock hide" data-group="extract" data-mode="batch">
+      <div class="label"><span>terminal</span><button class="copy-btn" onclick="copyCmd(this)">copy</button></div>
+      <pre>python3 forms/extract_paper_form.1.5.py --batch &lt;folder_of_scans&gt; forms/hoos_cooking_paper_form_COL.1.2_fieldmap.json schema/hoos_cooking_form_schema.1.2.json &lt;output_basename&gt;</pre>
+    </div>
+
+    <div class="section-note" style="margin-top:10px;">
+      Produces <code>&lt;output_basename&gt;_submissions.csv</code> and <code>_line_items.csv</code>. Use the NGA fieldmap for a Nigeria form; a batch folder must be all one country.
+      Add <code>--model models/checkbox_classifier.1.0.pkl --digit-model models/digit_classifier.1.0.pkl</code> to use the trained classifiers instead of the built-in defaults — optional, see Retrain below.
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">3</span> Generate a review page</h2>
+    <div class="section-note">Two commands: first export the crops + manifest, then turn that into one HTML page a reviewer opens directly (no terminal from there on).</div>
+
+    <div class="mode-toggle" data-group="review">
+      <button class="mode-btn active" data-mode="single">One scan</button>
+      <button class="mode-btn" data-mode="batch">A folder of scans</button>
+    </div>
+    <div class="cmdblock" data-group="review" data-mode="single">
+      <div class="label"><span>terminal — step 3a</span><button class="copy-btn" onclick="copyCmd(this)">copy</button></div>
+      <pre>python3 forms/extract_paper_form.1.5.py --review &lt;scan.pdf&gt; forms/hoos_cooking_paper_form_COL.1.2_fieldmap.json schema/hoos_cooking_form_schema.1.2.json &lt;review_out_dir&gt;</pre>
+    </div>
+    <div class="cmdblock hide" data-group="review" data-mode="batch">
+      <div class="label"><span>terminal — step 3a</span><button class="copy-btn" onclick="copyCmd(this)">copy</button></div>
+      <pre>python3 forms/extract_paper_form.1.5.py --review --batch &lt;folder_of_scans&gt; forms/hoos_cooking_paper_form_COL.1.2_fieldmap.json schema/hoos_cooking_form_schema.1.2.json &lt;review_out_dir&gt;</pre>
+    </div>
+    <div class="cmdblock" data-group="review-b" data-mode="single">
+      <div class="label"><span>terminal — step 3b</span><button class="copy-btn" onclick="copyCmd(this)">copy</button></div>
+      <pre>python3 forms/build_review_tool.1.2.py &lt;review_out_dir&gt;/review_manifest_&lt;form_id&gt;.csv &lt;review_page.html&gt;</pre>
+    </div>
+    <div class="cmdblock hide" data-group="review-b" data-mode="batch">
+      <div class="label"><span>terminal — step 3b</span><button class="copy-btn" onclick="copyCmd(this)">copy</button></div>
+      <pre>python3 forms/build_review_tool.1.2.py &lt;review_out_dir&gt; &lt;review_page.html&gt;</pre>
+    </div>
+
+    <div class="section-note" style="margin-top:10px;">Then open <code>&lt;review_page.html&gt;</code> in any browser. A folder run combines every scan into one page, each with its own "are all other lines blank?" shortcut. See <a href="demo/demo_review.html">demo/demo_review.html</a> for a filled-in example.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">4</span> Ingest the reviewer's corrections</h2>
+    <div class="section-note">After downloading the corrected CSV from the review page:</div>
+    <div class="cmdblock">
+      <div class="label"><span>terminal</span><button class="copy-btn" onclick="copyCmd(this)">copy</button></div>
+      <pre>python3 forms/extract_paper_form.1.5.py --ingest &lt;corrected_manifest.csv&gt; labels/</pre>
+    </div>
+    <div class="section-note" style="margin-top:10px;">Appends to <code>checkbox_labels.csv</code> and <code>price_labels.csv</code> — the growing dataset the classifiers in the next step train on.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">5</span> Retrain the classifiers</h2>
+    <div class="section-note">Run anytime after ingesting new corrections, to fold them into the models. Each prints an honest accuracy estimate before saving.</div>
+    <div class="cmdblock">
+      <div class="label"><span>terminal — checkboxes</span><button class="copy-btn" onclick="copyCmd(this)">copy</button></div>
+      <pre>python3 forms/train_checkbox_classifier.1.0.py labels/checkbox_labels.csv models/checkbox_classifier.1.0.pkl</pre>
+    </div>
+    <div class="cmdblock">
+      <div class="label"><span>terminal — prices</span><button class="copy-btn" onclick="copyCmd(this)">copy</button></div>
+      <pre>python3 forms/train_digit_classifier.1.0.py labels/price_labels.csv models/digit_classifier.1.0.pkl</pre>
+    </div>
+    <div class="section-note" style="margin-top:10px;">The updated <code>.pkl</code> files are used automatically next time you pass <code>--model</code> / <code>--digit-model</code> in step 2 or 3.</div>
+  </section>
+
+  <details class="notes">
+    <summary>Implementation notes</summary>
+    <div class="body">
+      <div class="status-row">
+        <span class="status done">Checkbox/price geometry — auto-located, no manual calibration</span>
+        <span class="status done">Star-mark detection — validated on a real scan, 5/5</span>
+        <span class="status manual">Handwritten price OCR — classifier helps, still far from reliable</span>
+        <span class="status manual">Header field OCR — unreliable, not addressed yet</span>
+        <span class="status manual">Write-in item names — unreliable, needs a bigger model than this pipeline uses</span>
+        <span class="status manual">Running the scripts — needs Python + a terminal, no click-through app yet</span>
+      </div>
+      <ul class="refs">
+        <li><a href="schema/hoos_cooking_form_schema.1.2.json">hoos_cooking_form_schema.1.2.json</a> — single source of truth for food groups, item lists, output shape</li>
+        <li>Pipeline scripts (<code>extract_paper_form.*.py</code>, <code>build_review_tool.*.py</code>, <code>train_*.py</code>) are versioned by filename in this same folder; each docstring explains what changed</li>
+        <li><a href="labels/checkbox_labels.csv">checkbox_labels.csv</a> · <a href="labels/price_labels.csv">price_labels.csv</a> — current labeled examples</li>
+      </ul>
+    </div>
+  </details>
+
+  <footer>Hoos' Cooking — WiD Datathon 2026.</footer>
+</div>
+<script>
+function copyCmd(btn) {
+  const pre = btn.closest('.cmdblock').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent.trim()).then(() => {
+    const old = btn.textContent;
+    btn.textContent = 'copied'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = old; btn.classList.remove('copied'); }, 1400);
+  });
+}
+
+document.querySelectorAll('.mode-toggle').forEach(toggle => {
+  const group = toggle.dataset.group;
+  toggle.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.mode;
+      toggle.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b === btn));
+      document.querySelectorAll(`.cmdblock[data-group="${group}"]`).forEach(block => {
+        block.classList.toggle('hide', block.dataset.mode !== mode);
+      });
+      // "review" and "review-b" (steps 3a/3b) share one toggle
+      if (group === 'review') {
+        document.querySelectorAll('.cmdblock[data-group="review-b"]').forEach(block => {
+          block.classList.toggle('hide', block.dataset.mode !== mode);
+        });
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "_notes": [
+    "Shared field schema for the Hoos' Cooking price-reporting form (HTML form, printed/handwritten form, and the PDF extraction tool all derive from this file).",
+    "Nigeria (NGA) item lists are taken directly from the Gboko Rural Market mock example.",
+    "Colombia (COL) item lists are a DRAFT based on general knowledge of common staple foods and need validation by someone with local market knowledge before use.",
+    "food_groups follow the FAO Cost and Affordability of a Healthy Diet (CoAHD) six-group structure."
+  ],
+
+  "form_id_prefix": "CRP",
+
+  "food_groups": [
+    { "id": "starchy_staples",       "label": "Starchy Staples" },
+    { "id": "vegetables",            "label": "Vegetables" },
+    { "id": "fruits",                "label": "Fruits" },
+    { "id": "animal_source_foods",   "label": "Animal Source Foods" },
+    { "id": "legumes_nuts_seeds",    "label": "Legumes, Nuts & Seeds" },
+    { "id": "oils_fats",             "label": "Oils & Fats" }
+  ],
+
+  "header_fields": [
+    { "id": "form_id",          "label": "Form ID",                 "type": "string", "auto_generated": true },
+    { "id": "market_location",  "label": "Market / Location",       "type": "string", "required": true },
+    { "id": "vendor_stall_id",  "label": "Vendor / Stall ID",       "type": "string", "required": true },
+    { "id": "region_district",  "label": "Region / District",       "type": "string", "required": true },
+    { "id": "country",          "label": "Country",                 "type": "enum",   "values": ["NGA", "COL"], "required": true },
+    { "id": "date",             "label": "Date",                    "type": "date",   "required": true },
+    { "id": "currency",         "label": "Currency",                "type": "string", "derived_from": "country", "required": true },
+    { "id": "collected_by",     "label": "Collected By (enumerator)", "type": "string", "required": false },
+    { "id": "source_channel",   "label": "Source Channel",          "type": "enum",   "values": ["html_form", "paper_scan"], "required": true }
+  ],
+
+  "write_in_slots_per_group": 2,
+
+  "countries": {
+    "NGA": {
+      "currency": "NGN",
+      "item_lists": {
+        "starchy_staples": [
+          { "item_id": "rice_local",     "label": "Rice, local",           "default_unit": "1 kg" },
+          { "item_id": "cassava_fresh",  "label": "Cassava, fresh",        "default_unit": "1 kg" },
+          { "item_id": "sweet_potato",   "label": "Sweet potato",          "default_unit": "1 kg" },
+          { "item_id": "yam_tuber",      "label": "Yam tuber",             "default_unit": "1 kg" },
+          { "item_id": "garri",          "label": "Garri",                 "default_unit": "1 kg" }
+        ],
+        "vegetables": [
+          { "item_id": "ewedu_leaves",   "label": "Ewedu leaves",          "default_unit": "bundle" },
+          { "item_id": "pepper_scotch",  "label": "Pepper (scotch bonnet)","default_unit": "1 kg" },
+          { "item_id": "onion",          "label": "Onion",                 "default_unit": "1 kg" },
+          { "item_id": "ugu_leaves",     "label": "Ugu leaves",            "default_unit": "bundle" },
+          { "item_id": "tomato",         "label": "Tomato",                "default_unit": "1 kg" }
+        ],
+        "fruits": [
+          { "item_id": "pineapple",      "label": "Pineapple",             "default_unit": "each" },
+          { "item_id": "banana",         "label": "Banana",                "default_unit": "dozen" },
+          { "item_id": "orange",         "label": "Orange",                "default_unit": "each" },
+          { "item_id": "pawpaw",         "label": "Pawpaw",                "default_unit": "each" },
+          { "item_id": "watermelon",     "label": "Watermelon",            "default_unit": "each" }
+        ],
+        "animal_source_foods": [
+          { "item_id": "catfish_fresh",  "label": "Fresh catfish",         "default_unit": "1 kg" },
+          { "item_id": "chicken_whole",  "label": "Chicken, whole",        "default_unit": "1 kg" },
+          { "item_id": "eggs",           "label": "Eggs",                  "default_unit": "crate (30)" },
+          { "item_id": "beef",           "label": "Beef",                  "default_unit": "1 kg" },
+          { "item_id": "dried_fish",     "label": "Dried fish (stockfish)","default_unit": "1 kg" }
+        ],
+        "legumes_nuts_seeds": [
+          { "item_id": "beans_brown",       "label": "Beans, brown",         "default_unit": "1 kg" },
+          { "item_id": "beans_black_eyed",  "label": "Beans, black-eyed",    "default_unit": "1 kg" },
+          { "item_id": "soybeans",          "label": "Soybeans",             "default_unit": "1 kg" },
+          { "item_id": "groundnuts_shelled","label": "Groundnuts, shelled",  "default_unit": "1 kg" },
+          { "item_id": "egusi",             "label": "Egusi (melon seed)",   "default_unit": "1 kg" }
+        ],
+        "oils_fats": [
+          { "item_id": "palm_oil",       "label": "Palm oil",              "default_unit": "1 L" },
+          { "item_id": "groundnut_oil",  "label": "Groundnut oil",         "default_unit": "1 L" },
+          { "item_id": "vegetable_oil",  "label": "Vegetable oil",         "default_unit": "1 L" },
+          { "item_id": "margarine",      "label": "Margarine",             "default_unit": "500 g" }
+        ]
+      }
+    },
+
+    "COL": {
+      "currency": "COP",
+      "_draft_warning": "Placeholder list based on general knowledge of common Colombian staples — needs review by someone with local market knowledge before use.",
+      "item_lists": {
+        "starchy_staples": [
+          { "item_id": "rice",           "label": "Rice (arroz)",           "default_unit": "1 kg" },
+          { "item_id": "potato",         "label": "Potato (papa)",          "default_unit": "1 kg" },
+          { "item_id": "plantain",       "label": "Plantain (plátano)",     "default_unit": "1 kg" },
+          { "item_id": "cassava_yuca",   "label": "Cassava (yuca)",         "default_unit": "1 kg" },
+          { "item_id": "corn",           "label": "Corn (maíz)",            "default_unit": "1 kg" }
+        ],
+        "vegetables": [
+          { "item_id": "tomato",         "label": "Tomato (tomate)",        "default_unit": "1 kg" },
+          { "item_id": "onion",          "label": "Onion (cebolla)",        "default_unit": "1 kg" },
+          { "item_id": "carrot",         "label": "Carrot (zanahoria)",     "default_unit": "1 kg" },
+          { "item_id": "sweet_pepper",   "label": "Sweet pepper (pimentón)","default_unit": "1 kg" },
+          { "item_id": "cabbage",        "label": "Cabbage (repollo)",      "default_unit": "each" }
+        ],
+        "fruits": [
+          { "item_id": "banana",         "label": "Banana (banano/guineo)", "default_unit": "dozen" },
+          { "item_id": "mango",          "label": "Mango",                  "default_unit": "each" },
+          { "item_id": "orange",         "label": "Orange (naranja)",       "default_unit": "each" },
+          { "item_id": "papaya",         "label": "Papaya",                 "default_unit": "each" },
+          { "item_id": "pineapple",      "label": "Pineapple (piña)",       "default_unit": "each" }
+        ],
+        "animal_source_foods": [
+          { "item_id": "beef",           "label": "Beef (carne de res)",    "default_unit": "1 kg" },
+          { "item_id": "chicken",        "label": "Chicken (pollo)",        "default_unit": "1 kg" },
+          { "item_id": "eggs",           "label": "Eggs (huevos)",          "default_unit": "crate (30)" },
+          { "item_id": "cheese",         "label": "Fresh cheese (queso)",   "default_unit": "1 kg" },
+          { "item_id": "fish",           "label": "Fish (pescado)",         "default_unit": "1 kg" }
+        ],
+        "legumes_nuts_seeds": [
+          { "item_id": "red_beans",      "label": "Red beans (frijol rojo)","default_unit": "1 kg" },
+          { "item_id": "lentils",        "label": "Lentils (lentejas)",     "default_unit": "1 kg" },
+          { "item_id": "chickpeas",      "label": "Chickpeas (garbanzo)",   "default_unit": "1 kg" },
+          { "item_id": "peanuts",        "label": "Peanuts (maní)",         "default_unit": "1 kg" }
+        ],
+        "oils_fats": [
+          { "item_id": "vegetable_oil",  "label": "Vegetable oil (aceite vegetal)", "default_unit": "1 L" },
+          { "item_id": "palm_oil",       "label": "Palm oil (aceite de palma)",     "default_unit": "1 L" },
+          { "item_id": "margarine",      "label": "Margarine (margarina)",          "default_unit": "500 g" },
+          { "item_id": "butter",         "label": "Butter (mantequilla)",           "default_unit": "500 g" }
+        ]
+      }
+    }
+  },
+
+  "output_tables": {
+    "submissions": ["form_id", "market_location", "vendor_stall_id", "region_district", "country", "date", "currency", "collected_by", "source_channel"],
+    "line_items": ["form_id", "food_group_id", "item_id", "item_label", "unit", "price", "is_write_in", "notes"]
+  }
+}
