@@ -3,7 +3,8 @@
 Part of the WiD Datathon 2026 project. 
 
 * Collects real-time, subnational retail food price data in Nigeria and Colombia (pilot countries) 
-via a digital form or a printed paper form,
+  * via a digital form
+  * or a printed paper form,
 * extracts paper-form submissions automatically (checkbox marks +
 handwritten prices), and
 * includes a human review step and
