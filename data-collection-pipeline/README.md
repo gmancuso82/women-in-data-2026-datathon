@@ -1,8 +1,8 @@
 # Hoos' Cooking — Retail Food Price Data Pipeline
 
-Part of the WiD Datathon 2026 project. Collects real-time, subnational retail food price data in Nigeria and Colombia via a digital form or a printed paper form, extracts paper-form submissions automatically (checkbox marks + handwritten prices), and includes a human review step and a feedback loop that turns operator corrections into training data for two small classifiers.
+**Part of the WiD Datathon 2026 project**. Collects real-time, subnational retail food price data in Nigeria and Colombia via a digital form or a printed paper form, extracts paper-form submissions automatically (checkbox marks + handwritten prices), and includes a human review step and a feedback loop that turns operator corrections into training data for two small classifiers.
 
-This is a proof-of-concept: real-time, subnational retail food price data — the
+**This is a proof-of-concept:** real-time, subnational retail food price data — the
 kind needed to track the cost and affordability of a healthy diet — is one of
 the data categories most consistently flagged as necessary for monitoring
 progress toward the UN's 2030 Agenda (SDG 2), yet it remains largely
@@ -10,16 +10,9 @@ unavailable or collected too infrequently in the countries where it's needed
 most (see FAO's [State of Food Security and Nutrition in the World](https://www.fao.org/publications/fao-flagship-publications/the-state-of-food-security-and-nutrition-in-the-world/en)
 report). 
 
-Rather than collecting this data externally, the pipeline is designed
-to be run by the countries themselves — a bottom-up model that builds local
+**Rather than collecting this data externally, the pipeline is designed
+to be run by the countries themselves** — a *bottom-up model* that builds local
 data-collection capacity while filling a gap the UN has already documented.
-
-Note: FAO's SOFI report is published jointly with IFAD, UNICEF, WFP and WHO under the "cost and affordability of a healthy diet" (CoAHD) indicator 
-
-Sources:
-- [The State of Food Security and Nutrition in the World (FAO flagship page)](https://www.fao.org/publications/fao-flagship-publications/the-state-of-food-security-and-nutrition-in-the-world/en)
-- [2.3 Cost and affordability of a healthy diet: an update (SOFI 2022, FAO)](https://openknowledge.fao.org/server/api/core/bitstreams/6ca1510c-9341-4d6a-b285-5f5e8743cc46/content/sofi-2022/cost-affordability-healthy-diet.html)
-- [Cost and Affordability of a Healthy Diet (CoAHD) — ANH Academy Data4Diets](https://www.anh-academy.org/data4diets/indicator/cost-and-affordability-healthy-diet-coahd)
 
 ## Folder layout
 
@@ -61,7 +54,7 @@ python3 forms/extract_paper_form.1.5.py --batch <folder_of_pdfs> \
     <output_basename>
 ```
 
-See `forms/pipeline_hub.*.html` for the full collect → extract → review →
+See `pipeline_hub.*.html` for the full collect → extract → review →
 ingest walkthrough with copy-paste commands, or open `demo/demo_review.html`
 directly for a working example with no setup.
 
@@ -74,3 +67,8 @@ python3 forms/train_digit_classifier.1.0.py labels/price_labels.csv models/digit
 
 Both print an honest accuracy estimate before saving. See each script's
 docstring for how the classifier works and its current limitations.
+
+## References: 
+- [The State of Food Security and Nutrition in the World (FAO flagship page)](https://www.fao.org/publications/fao-flagship-publications/the-state-of-food-security-and-nutrition-in-the-world/en)
+- [2.3 Cost and affordability of a healthy diet: an update (SOFI 2022, FAO)](https://openknowledge.fao.org/server/api/core/bitstreams/6ca1510c-9341-4d6a-b285-5f5e8743cc46/content/sofi-2022/cost-affordability-healthy-diet.html)
+- [Cost and Affordability of a Healthy Diet (CoAHD) — ANH Academy Data4Diets](https://www.anh-academy.org/data4diets/indicator/cost-and-affordability-healthy-diet-coahd)
