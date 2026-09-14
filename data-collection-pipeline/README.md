@@ -1,10 +1,13 @@
 # Hoos' Cooking -- Retail Food Price Data Collection -- Pipeline
 
-Part of the WiD Datathon 2026 project. Collects real-time, subnational retail
-food price data in Nigeria and Colombia via a digital form or a printed
-paper form, extracts paper-form submissions automatically (checkbox marks +
-handwritten prices), and includes a human review step and a feedback loop
-that turns operator corrections into training data for two small classifiers.
+Part of the WiD Datathon 2026 project. 
+
+* Collects real-time, subnational retail food price data in Nigeria and Colombia (pilot countries) 
+via a digital form or a printed paper form,
+* extracts paper-form submissions automatically (checkbox marks +
+handwritten prices), and
+* includes a human review step and
+* a feedback loop that turns operator corrections into training data for two small classifiers that can be used to retrin the model to recognize handwriting samples from the target country.
 
 ## Folder layout
 
