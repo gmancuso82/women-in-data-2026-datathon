@@ -1,0 +1,17 @@
+food_group_id,food_group_label,item_id,item_label,unit,price,raw_price_text,is_write_in,needs_review,form_id
+starchy_staples,Starchy Staples,rice,Rice (arroz),1 kg,2.0,2,False,False,vendor_bogota_central_REAL
+starchy_staples,Starchy Staples,potato_criolla,"Potato, criolla (papa criolla)",1 kg,,,False,True,vendor_bogota_central_REAL
+starchy_staples,Starchy Staples,cassava_yuca,Cassava (yuca),1 kg,5.0,5,False,False,vendor_bogota_central_REAL
+starchy_staples,Starchy Staples,name_yam,Yam (ñame),1 kg,41.0,41,False,False,vendor_bogota_central_REAL
+starchy_staples,Starchy Staples,corn_white,"Corn, white (maíz blanco)",1 kg,2.0,2,False,False,vendor_bogota_central_REAL
+starchy_staples,Starchy Staples,rice,Rice (arroz),1 kg,3200.0,3200,False,False,vendor_market_b
+starchy_staples,Starchy Staples,potato_pastusa,"Potato, pastusa (papa parda pastusa)",1 kg,1800.0,1800,False,False,vendor_market_b
+starchy_staples,Starchy Staples,plantain_green,"Plantain, green (plátano hartón verde)",1 kg,1500.0,1500,False,False,vendor_market_b
+starchy_staples,Starchy Staples,cassava_yuca,Cassava (yuca),1 kg,2100.0,2100,False,False,vendor_market_b
+starchy_staples,Starchy Staples,corn_white,"Corn, white (maíz blanco)",1 kg,2600.0,2600,False,False,vendor_market_b
+starchy_staples,Starchy Staples,potato_criolla,"Potato, criolla (papa criolla)",1 kg,2400.0,2400,False,False,vendor_market_c
+starchy_staples,Starchy Staples,banana_guineo,"Banana, guineo (plátano guineo)",1 kg,1300.0,1300,False,False,vendor_market_c
+starchy_staples,Starchy Staples,arracacha,Arracacha (apio criollo),1 kg,2900.0,2900,False,False,vendor_market_c
+starchy_staples,Starchy Staples,name_yam,Yam (ñame),1 kg,3300.0,3300,False,False,vendor_market_c
+starchy_staples,Starchy Staples,wheat_flour,Wheat flour (harina de trigo),1 kg,4100.0,4100,False,False,vendor_market_c
+starchy_staples,Starchy Staples,arepa_flour,Precooked corn flour (harina precocida / masa para arepa),1 kg,3700.0,3700,False,False,vendor_market_c

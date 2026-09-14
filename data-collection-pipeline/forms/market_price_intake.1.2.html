@@ -1,0 +1,623 @@
+<title>Market Price Intake</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --paper:#F3F1E7; --surface:#FFFFFF; --surface-2:#FBF9F2;
+    --ink:#20231F; --muted:#6E6A5E; --line:#DAD4C3;
+    --accent:#B8792A; --accent-ink:#FFFFFF;
+    --accent-deep:#1F4B3F; --accent-deep-ink:#FFFFFF;
+    --success:#2E7D4F; --success-bg:#E4EFE6;
+    --danger:#B23B3B; --danger-bg:#F6E6E4;
+    --focus:#B8792A;
+    --shadow: 0 1px 2px rgba(32,35,31,.06), 0 4px 14px rgba(32,35,31,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1B1D18; --surface:#24261F; --surface-2:#2B2D24;
+      --ink:#EDEAE0; --muted:#A9A392; --line:#3A3B31;
+      --accent:#D6944A; --accent-ink:#1B1D18;
+      --accent-deep:#4C8A75; --accent-deep-ink:#0E1512;
+      --success:#5FB584; --success-bg:#233428;
+      --danger:#E27272; --danger-bg:#3A2523;
+      --focus:#D6944A;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 18px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1B1D18; --surface:#24261F; --surface-2:#2B2D24;
+    --ink:#EDEAE0; --muted:#A9A392; --line:#3A3B31;
+    --accent:#D6944A; --accent-ink:#1B1D18;
+    --accent-deep:#4C8A75; --accent-deep-ink:#0E1512;
+    --success:#5FB584; --success-bg:#233428;
+    --danger:#E27272; --danger-bg:#3A2523;
+    --focus:#D6944A;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 18px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Public Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size:15px; line-height:1.5;
+    padding-inline:16px; padding-block:0 88px;
+  }
+  .wrap{max-width:720px; margin:0 auto;}
+
+  .topbar{
+    position:sticky; top:0; z-index:5; background:var(--paper);
+    padding-block:16px 10px; border-bottom:1px solid var(--line);
+    margin-bottom:16px;
+  }
+  .topbar h1{
+    font-family:"Archivo", ui-sans-serif, sans-serif; font-weight:800;
+    font-size:1.5rem; letter-spacing:-.01em; margin:0 0 2px; text-wrap:balance;
+  }
+  .topbar .sub{color:var(--muted); font-size:.86rem; margin:0 0 12px;}
+  .country-toggle{
+    display:flex; gap:4px; background:var(--surface-2); border:1px solid var(--line);
+    border-radius:10px; padding:3px; width:fit-content;
+  }
+  .country-toggle button{
+    border:none; background:transparent; color:var(--muted); font:inherit;
+    font-weight:600; font-size:.85rem; padding:7px 14px; border-radius:8px; cursor:pointer;
+  }
+  .country-toggle button.active{background:var(--accent-deep); color:var(--accent-deep-ink);}
+
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:16px; margin-bottom:14px; box-shadow:var(--shadow);
+  }
+  .card h2{font-family:"Archivo",sans-serif; font-size:1rem; font-weight:700; margin:0 0 12px;}
+
+  .field-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px 14px;}
+  @media (max-width:480px){ .field-grid{grid-template-columns:1fr;} }
+  .field{display:flex; flex-direction:column; gap:4px;}
+  .field label{
+    font-size:.72rem; font-weight:600; letter-spacing:.03em; text-transform:uppercase;
+    color:var(--muted);
+  }
+  .field input, .field select{
+    font:inherit; font-size:.92rem; padding:9px 10px; border-radius:8px;
+    border:1px solid var(--line); background:var(--surface); color:var(--ink);
+  }
+  .field input:focus, .field select:focus, input:focus, button:focus-visible{
+    outline:2px solid var(--focus); outline-offset:1px;
+  }
+  .field input[readonly]{background:var(--surface-2); color:var(--muted);}
+  .field.invalid input{border-color:var(--danger);}
+  .field .err{color:var(--danger); font-size:.76rem; display:none;}
+  .field.invalid .err{display:block;}
+
+  .instructions{
+    display:flex; gap:10px; align-items:flex-start;
+    background:var(--surface-2); border:1px solid var(--line); border-radius:12px;
+    padding:12px 14px; margin-bottom:16px; font-size:.86rem; color:var(--muted);
+  }
+  .instructions b{color:var(--ink);}
+
+  details.group{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    margin-bottom:10px; box-shadow:var(--shadow); overflow:hidden;
+  }
+  details.group > summary{
+    list-style:none; cursor:pointer; padding:14px 16px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  details.group > summary::-webkit-details-marker{display:none;}
+  .g-title{font-family:"Archivo",sans-serif; font-weight:700; font-size:.98rem;}
+  .g-right{display:flex; align-items:center; gap:10px;}
+  .chip{
+    font-family:"IBM Plex Mono", monospace; font-size:.76rem; font-weight:600;
+    padding:3px 9px; border-radius:999px; background:var(--surface-2); color:var(--muted);
+    border:1px solid var(--line); font-variant-numeric:tabular-nums;
+  }
+  .chip.has-items{background:var(--success-bg); color:var(--success); border-color:transparent;}
+  .chev{transition:transform .15s ease; color:var(--muted);}
+  details[open] .chev{transform:rotate(90deg);}
+
+  .g-body{padding:2px 16px 14px; border-top:1px solid var(--line);}
+  .row{
+    display:grid; grid-template-columns:22px 1fr 72px 108px; align-items:center;
+    gap:10px; padding:9px 0; border-bottom:1px solid var(--line);
+  }
+  .row:last-child{border-bottom:none;}
+  .row input[type="checkbox"]{width:18px; height:18px; accent-color:var(--accent);}
+  .row .item-label{font-size:.88rem;}
+  .row .unit{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--muted); text-align:right;}
+  .row .price{
+    font-family:"IBM Plex Mono",monospace; font-size:.88rem; text-align:right;
+    padding:6px 8px; border-radius:7px; border:1px solid var(--line); background:var(--surface);
+    color:var(--ink); font-variant-numeric:tabular-nums; width:100%;
+  }
+  .row .price::placeholder{color:var(--muted); opacity:.6;}
+  .row.checked .price{border-color:var(--accent);}
+
+  .wi-row{
+    display:grid; grid-template-columns:1fr 72px 108px; gap:8px; padding:8px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .wi-row:last-child{border-bottom:none;}
+  .wi-row input{
+    font:inherit; font-size:.84rem; padding:6px 8px; border-radius:7px;
+    border:1px solid var(--line); background:var(--surface); color:var(--ink);
+  }
+  .wi-row .wi-price{font-family:"IBM Plex Mono",monospace; text-align:right; font-variant-numeric:tabular-nums;}
+  .wi-label{font-size:.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:.03em;
+             margin:10px 0 2px;}
+
+  .bottombar{
+    position:fixed; left:0; right:0; bottom:0; z-index:6;
+    background:var(--surface); border-top:1px solid var(--line);
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    box-shadow:0 -4px 16px rgba(0,0,0,.08);
+  }
+  .bottombar .count{font-size:.84rem; color:var(--muted);}
+  .bottombar .count b{color:var(--ink); font-family:"IBM Plex Mono",monospace;}
+  button.primary{
+    font:inherit; font-weight:700; font-size:.92rem; color:var(--accent-ink);
+    background:var(--accent-deep); border:none; border-radius:10px; padding:11px 20px;
+    cursor:pointer; color:var(--accent-deep-ink);
+  }
+  button.ghost{
+    font:inherit; font-weight:600; font-size:.88rem; color:var(--ink);
+    background:transparent; border:1px solid var(--line); border-radius:10px; padding:10px 16px;
+    cursor:pointer;
+  }
+
+  #review{display:none;}
+  .summary-grid{display:grid; grid-template-columns:1fr auto; gap:8px 12px; font-size:.88rem;}
+  .summary-grid .k{color:var(--muted);}
+  .summary-grid .v{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; text-align:right;}
+  .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+  .banner-ok{
+    display:flex; gap:10px; align-items:center; background:var(--success-bg); color:var(--success);
+    border-radius:12px; padding:12px 14px; font-weight:600; font-size:.9rem; margin-bottom:14px;
+  }
+  .banner-info{
+    display:flex; gap:10px; align-items:flex-start; background:var(--surface-2); color:var(--muted);
+    border-radius:12px; padding:12px 14px; font-size:.84rem; margin-bottom:12px;
+  }
+  #fallbackCard textarea{
+    width:100%; min-height:140px; font-family:"IBM Plex Mono",monospace; font-size:.78rem;
+    padding:10px; border-radius:8px; border:1px solid var(--line); background:var(--surface-2);
+    color:var(--ink); resize:vertical; margin-bottom:10px;
+  }
+  .copy-status{font-size:.8rem; color:var(--success); margin-left:8px;}
+  [hidden]{display:none !important;}
+</style>
+
+<div class="wrap">
+  <div class="topbar">
+    <h1>Market Price Intake</h1>
+    <p class="sub">Community Retail Price Reporting &middot; Cost of a Healthy Diet local price monitoring pilot</p>
+    <div class="country-toggle" id="countryToggle" role="tablist" aria-label="Country">
+      <button data-country="NGA" class="active" role="tab" aria-selected="true">Nigeria</button>
+      <button data-country="COL" role="tab" aria-selected="false">Colombia</button>
+    </div>
+  </div>
+
+  <div id="formView">
+    <div class="card">
+      <h2>Submission details</h2>
+      <div class="field-grid" id="headerFields"></div>
+    </div>
+
+    <div class="instructions">
+      <span>&#9432;</span>
+      <span><b>For each item you sell,</b> check the box and enter today's price for the unit shown.
+      If you sell more than one variety or grade at different prices, enter the price of the
+      <b>least expensive</b> option only. Leave items you don't sell unchecked.</span>
+    </div>
+
+    <div id="groups"></div>
+  </div>
+
+  <div id="review">
+    <div class="banner-ok"><span>&#10003;</span> Ready to export &mdash; review before downloading.</div>
+    <div class="card">
+      <h2>Submission summary</h2>
+      <div class="summary-grid" id="summaryGrid"></div>
+    </div>
+    <div class="actions">
+      <button class="primary" id="downloadJson">Download JSON</button>
+      <button class="ghost" id="downloadCsv">Download CSV</button>
+      <button class="ghost" id="backToForm">Edit form</button>
+    </div>
+
+    <div class="card" id="fallbackCard" hidden>
+      <h2 id="fallbackTitle">Export data</h2>
+      <div class="banner-info">
+        <span>&#9432;</span>
+        <span>Downloads aren't available in this preview. Copy the text below and save it as
+        <span id="fallbackFilename"></span> yourself.</span>
+      </div>
+      <textarea id="fallbackText" readonly></textarea>
+      <button class="ghost" id="copyFallback">Copy to clipboard</button>
+      <span class="copy-status" id="copyStatus" hidden>Copied</span>
+    </div>
+  </div>
+</div>
+
+<div class="bottombar" id="bottombar">
+  <div class="count"><b id="itemCount">0</b> items entered</div>
+  <button class="primary" id="reviewBtn">Review &amp; Submit</button>
+</div>
+
+<script>
+const SCHEMA = {
+  "schema_version": "1.2",
+  "form_id_prefix": "CRP",
+  "food_groups": [
+    { "id": "starchy_staples", "label": "Starchy Staples" },
+    { "id": "vegetables", "label": "Vegetables" },
+    { "id": "fruits", "label": "Fruits" },
+    { "id": "animal_source_foods", "label": "Animal Source Foods" },
+    { "id": "legumes_nuts_seeds", "label": "Legumes, Nuts & Seeds" },
+    { "id": "oils_fats", "label": "Oils & Fats" }
+  ],
+  "header_fields": [
+    { "id": "market_location", "label": "Market / Location", "type": "text", "required": true },
+    { "id": "vendor_stall_id", "label": "Vendor / Stall ID", "type": "text", "required": true },
+    { "id": "region_district", "label": "Region / District", "type": "text", "required": true },
+    { "id": "date", "label": "Date", "type": "date", "required": true },
+    { "id": "collected_by", "label": "Collected By (enumerator)", "type": "text", "required": false }
+  ],
+  "write_in_slots_per_group": 3,
+  "countries": {
+    "NGA": { "currency": "NGN", "item_lists": {
+      "starchy_staples": [["rice_local","Rice, local","1 kg"],["rice_imported","Rice, imported","1 kg"],["cassava_fresh","Cassava, fresh","1 kg"],["garri","Garri","1 kg"],["fufu","Fufu (cassava)","1 kg"],["yam_tuber","Yam tuber","1 kg"],["yam_flour","Yam flour (elubo)","1 kg"],["sweet_potato","Sweet potato","1 kg"],["cocoyam","Cocoyam","1 kg"],["plantain_unripe","Plantain (cooking)","1 kg"],["maize","Maize / corn","1 kg"],["sorghum","Sorghum","1 kg"],["millet","Millet","1 kg"],["wheat_flour","Wheat flour","1 kg"],["semovita","Semovita / semolina","1 kg"]],
+      "vegetables": [["ewedu_leaves","Ewedu leaves","bundle"],["ugu_leaves","Ugu leaves","bundle"],["pepper_scotch","Pepper (scotch bonnet)","1 kg"],["pepper_bell","Pepper (tatashe / bell)","1 kg"],["onion","Onion","1 kg"],["tomato","Tomato","1 kg"],["okra","Okra","1 kg"],["spinach_efo","Spinach (efo tete)","bundle"],["bitter_leaf","Bitter leaf (ewuro)","bundle"],["waterleaf","Waterleaf (gbure)","bundle"],["garden_egg","Garden egg (eggplant)","1 kg"],["cabbage","Cabbage","each"],["carrot","Carrot","1 kg"],["cucumber","Cucumber","1 kg"],["green_beans","Green beans","1 kg"]],
+      "fruits": [["pineapple","Pineapple","each"],["banana","Banana","dozen"],["orange","Orange","each"],["pawpaw","Pawpaw","each"],["watermelon","Watermelon","each"],["mango","Mango","each"],["guava","Guava","each"],["tangerine","Tangerine","each"],["avocado","Avocado (pear)","each"],["african_star_apple","African star apple (udara)","heap"],["coconut","Coconut","each"],["velvet_tamarind","Velvet tamarind (awin)","heap"],["soursop","Soursop","each"],["cashew_fruit","Cashew (fruit)","heap"],["sugar_cane","Sugar cane","stick"]],
+      "animal_source_foods": [["catfish_fresh","Fresh catfish","1 kg"],["chicken_whole","Chicken, whole","1 kg"],["eggs","Eggs","crate (30)"],["beef","Beef","1 kg"],["dried_fish","Dried fish (stockfish)","1 kg"],["goat_meat","Goat meat","1 kg"],["tilapia","Tilapia fish","1 kg"],["titus_mackerel","Titus / mackerel (frozen)","1 kg"],["turkey","Turkey","1 kg"],["pork","Pork","1 kg"],["crayfish_dried","Crayfish, dried","1 kg"],["snail","Snail","each"],["milk","Milk (fresh/powdered)","1 L"],["local_cheese","Local cheese (wara)","1 kg"],["shrimp","Shrimp","1 kg"]],
+      "legumes_nuts_seeds": [["beans_brown","Beans, brown","1 kg"],["beans_black_eyed","Beans, black-eyed","1 kg"],["soybeans","Soybeans","1 kg"],["groundnuts_shelled","Groundnuts, shelled","1 kg"],["egusi","Egusi (melon seed)","1 kg"],["bambara_nut","Bambara nut","1 kg"],["locust_beans","Locust beans (iru)","1 kg"],["tiger_nut","Tiger nut (aya)","1 kg"],["sesame_seed","Sesame seed (beniseed)","1 kg"],["pigeon_pea","Pigeon pea","1 kg"],["african_walnut","African walnut (ukpa)","1 kg"],["cashew_nuts","Cashew nuts","1 kg"],["kuli_kuli","Kuli-kuli (groundnut cake)","1 kg"],["groundnut_unshelled","Groundnuts, unshelled","1 kg"],["pumpkin_seed","Pumpkin seed (elegede)","1 kg"]],
+      "oils_fats": [["palm_oil","Palm oil","1 L"],["groundnut_oil","Groundnut oil","1 L"],["vegetable_oil","Vegetable oil","1 L"],["margarine","Margarine","500 g"],["coconut_oil","Coconut oil","1 L"],["shea_butter","Shea butter","1 kg"],["butter","Butter","500 g"],["sunflower_oil","Sunflower oil","1 L"],["corn_oil","Corn oil","1 L"],["palm_kernel_oil","Palm kernel oil","1 L"],["ghee","Ghee / clarified butter","500 g"],["beef_fat","Beef fat / suet","1 kg"]]
+    }},
+    "COL": { "currency": "COP", "item_lists": {
+      "starchy_staples": [["rice", "Rice (arroz)", "1 kg"], ["potato_pastusa", "Potato, pastusa (papa parda pastusa)", "1 kg"], ["potato_criolla", "Potato, criolla (papa criolla)", "1 kg"], ["potato_superior", "Potato, superior (papa superior)", "1 kg"], ["plantain_green", "Plantain, green (plátano hartón verde)", "1 kg"], ["banana_guineo", "Banana, guineo (plátano guineo)", "1 kg"], ["cassava_yuca", "Cassava (yuca)", "1 kg"], ["arracacha", "Arracacha (apio criollo)", "1 kg"], ["name_yam", "Yam (ñame)", "1 kg"], ["corn_yellow", "Corn, yellow (maíz amarillo)", "1 kg"], ["corn_white", "Corn, white (maíz blanco)", "1 kg"], ["wheat_flour", "Wheat flour (harina de trigo)", "1 kg"], ["pasta", "Pasta (pastas alimenticias)", "1 kg"], ["arepa_flour", "Precooked corn flour (harina precocida / masa para arepa)", "1 kg"], ["bread", "Bread (pan)", "500 g"]],
+      "vegetables": [["onion_white", "Onion, white (cebolla cabezona blanca)", "1 kg"], ["onion_red", "Onion, red (cebolla cabezona roja)", "1 kg"], ["scallion", "Green onion (cebolla junca)", "bundle"], ["tomato", "Tomato (tomate chonto)", "1 kg"], ["carrot", "Carrot (zanahoria)", "1 kg"], ["cucumber", "Cucumber (pepino cohombro)", "1 kg"], ["green_beans", "Green beans (habichuela)", "1 kg"], ["beet", "Beet (remolacha)", "1 kg"], ["green_peas_pod", "Green peas, in pod (arveja verde en vaina)", "1 kg"], ["lettuce", "Lettuce (lechuga)", "each"], ["corn_cob", "Corn on the cob (chócolo mazorca)", "each"], ["cabbage", "Cabbage (repollo)", "each"], ["celery", "Celery (apio)", "bundle"], ["pumpkin_ahuyama", "Pumpkin (ahuyama)", "1 kg"], ["sweet_pepper", "Sweet pepper (pimentón)", "1 kg"]],
+      "fruits": [["mango_tommy", "Mango, Tommy", "each"], ["mango_azucar", "Mango, sugar (mango de azúcar)", "each"], ["orange_valencia", "Orange, Valencia (naranja Valencia)", "each"], ["mandarin", "Mandarin (mandarina)", "each"], ["lemon_tahiti", "Lemon, Tahití (limón Tahití)", "each"], ["watermelon", "Watermelon (patilla)", "each"], ["blackberry", "Blackberry (mora)", "1 kg"], ["apple", "Apple (manzana)", "each"], ["pineapple", "Pineapple, Gold (piña Gold)", "each"], ["banana_dessert", "Banana (banano)", "dozen"], ["papaya", "Papaya", "each"], ["avocado_hass", "Avocado, Hass (aguacate Hass)", "each"], ["passion_fruit", "Passion fruit (maracuyá)", "each"], ["tree_tomato", "Tree tomato (tomate de árbol)", "1 kg"], ["lulo", "Lulo", "1 kg"]],
+      "animal_source_foods": [["beef", "Beef (carne de res)", "1 kg"], ["pork", "Pork (carne de cerdo)", "1 kg"], ["chicken", "Chicken (pollo)", "1 kg"], ["eggs", "Eggs (huevos)", "crate (30)"], ["tilapia", "Tilapia", "1 kg"], ["mojarra", "Mojarra fish (mojarra)", "1 kg"], ["cachama", "Cachama fish (cachama)", "1 kg"], ["bagre", "Catfish (bagre)", "1 kg"], ["bocachico", "Bocachico fish (bocachico)", "1 kg"], ["shrimp", "Shrimp (camarones)", "1 kg"], ["canned_tuna", "Canned tuna (atún en lata)", "can (170 g)"], ["milk", "Milk (leche)", "1 L"], ["cheese_fresco", "Fresh cheese (queso fresco/campesino)", "1 kg"], ["yogurt", "Yogurt (yogur)", "1 L"], ["cuajada", "Cuajada (fresh curd cheese)", "1 kg"]],
+      "legumes_nuts_seeds": [["beans_red", "Beans, red (frijol rojo)", "1 kg"], ["beans_cargamanto", "Beans, cargamanto (frijol cargamanto)", "1 kg"], ["lentils", "Lentils (lentejas)", "1 kg"], ["chickpeas", "Chickpeas (garbanzo)", "1 kg"], ["dried_peas", "Dried peas (arveja seca)", "1 kg"], ["peanuts", "Peanuts (maní)", "1 kg"]],
+      "oils_fats": [["vegetable_oil", "Vegetable oil (aceite vegetal)", "1 L"], ["palm_oil", "Palm oil (aceite de palma)", "1 L"], ["sunflower_oil", "Sunflower oil (aceite de girasol)", "1 L"], ["canola_oil", "Canola oil (aceite de canola)", "1 L"], ["coconut_oil", "Coconut oil (aceite de coco)", "1 L"], ["corn_oil", "Corn oil (aceite de maíz)", "1 L"], ["olive_oil", "Olive oil (aceite de oliva)", "1 L"], ["margarine", "Margarine (margarina)", "500 g"], ["butter", "Butter (mantequilla)", "500 g"], ["lard", "Lard (manteca de cerdo)", "1 kg"]]
+    }}
+  }
+};
+
+let country = "NGA";
+const els = {};
+
+function fieldId(groupId, itemId){ return `item__${groupId}__${itemId}`; }
+
+function buildHeaderFields(){
+  const wrap = document.getElementById("headerFields");
+  wrap.innerHTML = "";
+  SCHEMA.header_fields.forEach(f=>{
+    const field = document.createElement("div");
+    field.className = "field";
+    field.id = `field-${f.id}`;
+    const input = f.type === "date" ? `<input type="date" id="hf-${f.id}">`
+                                     : `<input type="text" id="hf-${f.id}" autocomplete="off">`;
+    field.innerHTML = `<label for="hf-${f.id}">${f.label}${f.required?" *":""}</label>${input}
+                        <span class="err">Required</span>`;
+    wrap.appendChild(field);
+  });
+  // read-only country/currency
+  const cField = document.createElement("div");
+  cField.className = "field";
+  cField.innerHTML = `<label>Country</label><input value="${country}" readonly>`;
+  wrap.appendChild(cField);
+  const curField = document.createElement("div");
+  curField.className = "field";
+  curField.id = "field-currency";
+  curField.innerHTML = `<label>Currency</label><input id="hf-currency" value="${SCHEMA.countries[country].currency}" readonly>`;
+  wrap.appendChild(curField);
+
+  const today = new Date().toISOString().slice(0,10);
+  const dateInput = document.getElementById("hf-date");
+  if (dateInput && !dateInput.value) dateInput.value = today;
+}
+
+function buildGroups(){
+  const wrap = document.getElementById("groups");
+  wrap.innerHTML = "";
+  SCHEMA.food_groups.forEach(group=>{
+    const items = SCHEMA.countries[country].item_lists[group.id] || [];
+    const det = document.createElement("details");
+    det.className = "group";
+    det.open = false;
+    det.innerHTML = `
+      <summary>
+        <span class="g-title">${group.label}</span>
+        <span class="g-right">
+          <span class="chip" id="chip-${group.id}">0 / ${items.length}</span>
+          <span class="chev">&#9656;</span>
+        </span>
+      </summary>
+      <div class="g-body" id="body-${group.id}"></div>`;
+    wrap.appendChild(det);
+
+    const body = det.querySelector(`#body-${group.id}`);
+    items.forEach(([itemId,label,unit])=>{
+      const id = fieldId(group.id, itemId);
+      const row = document.createElement("div");
+      row.className = "row";
+      row.id = `row-${id}`;
+      row.innerHTML = `
+        <input type="checkbox" id="chk-${id}" data-group="${group.id}" data-item="${itemId}">
+        <span class="item-label">${label}</span>
+        <span class="unit">${unit}</span>
+        <input type="number" inputmode="decimal" min="0" step="any" class="price"
+               id="price-${id}" placeholder="price" data-group="${group.id}" data-item="${itemId}">`;
+      body.appendChild(row);
+    });
+
+    for (let slot = 0; slot < SCHEMA.write_in_slots_per_group; slot++){
+      if (slot === 0){
+        const lbl = document.createElement("div");
+        lbl.className = "wi-label";
+        lbl.textContent = "Other (write in)";
+        body.appendChild(lbl);
+      }
+      const wi = document.createElement("div");
+      wi.className = "wi-row";
+      const wid = `${group.id}__wi${slot}`;
+      wi.innerHTML = `
+        <input type="text" placeholder="Item name" id="winame-${wid}" data-group="${group.id}" data-slot="${slot}">
+        <input type="text" placeholder="Unit" id="wiunit-${wid}">
+        <input type="number" inputmode="decimal" min="0" step="any" class="wi-price" placeholder="price" id="wiprice-${wid}">`;
+      body.appendChild(wi);
+    }
+  });
+}
+
+function attachRowBehavior(){
+  document.getElementById("groups").addEventListener("input", (e)=>{
+    if (e.target.classList.contains("price")){
+      const row = e.target.closest(".row");
+      const chk = row.querySelector('input[type="checkbox"]');
+      chk.checked = e.target.value !== "";
+      row.classList.toggle("checked", chk.checked);
+    }
+    updateCounts();
+  });
+  document.getElementById("groups").addEventListener("change", (e)=>{
+    if (e.target.type === "checkbox"){
+      const row = e.target.closest(".row");
+      row.classList.toggle("checked", e.target.checked);
+      if (!e.target.checked) row.querySelector(".price").value = "";
+    }
+    updateCounts();
+  });
+}
+
+function groupEntries(groupId){
+  const items = SCHEMA.countries[country].item_lists[groupId] || [];
+  let n = 0;
+  items.forEach(([itemId])=>{
+    const price = document.getElementById(`price-${fieldId(groupId,itemId)}`);
+    if (price && price.value !== "") n++;
+  });
+  for (let slot=0; slot<SCHEMA.write_in_slots_per_group; slot++){
+    const name = document.getElementById(`winame-${groupId}__wi${slot}`);
+    if (name && name.value.trim() !== "") n++;
+  }
+  return n;
+}
+
+function updateCounts(){
+  let total = 0;
+  SCHEMA.food_groups.forEach(g=>{
+    const n = groupEntries(g.id);
+    total += n;
+    const chip = document.getElementById(`chip-${g.id}`);
+    const items = SCHEMA.countries[country].item_lists[g.id] || [];
+    chip.textContent = `${n} / ${items.length + SCHEMA.write_in_slots_per_group}`;
+    chip.classList.toggle("has-items", n > 0);
+  });
+  document.getElementById("itemCount").textContent = total;
+}
+
+function genFormId(){
+  return `${SCHEMA.form_id_prefix}-${Date.now().toString(36).toUpperCase()}`;
+}
+
+function validateHeader(){
+  let ok = true;
+  SCHEMA.header_fields.filter(f=>f.required).forEach(f=>{
+    const input = document.getElementById(`hf-${f.id}`);
+    const field = document.getElementById(`field-${f.id}`);
+    const valid = input.value.trim() !== "";
+    field.classList.toggle("invalid", !valid);
+    if (!valid) ok = false;
+  });
+  return ok;
+}
+
+function assembleSubmission(){
+  const header = {};
+  SCHEMA.header_fields.forEach(f=> header[f.id] = document.getElementById(`hf-${f.id}`).value.trim());
+  const formId = genFormId();
+  const submission = {
+    form_id: formId,
+    market_location: header.market_location,
+    vendor_stall_id: header.vendor_stall_id,
+    region_district: header.region_district,
+    country: country,
+    date: header.date,
+    currency: SCHEMA.countries[country].currency,
+    collected_by: header.collected_by,
+    source_channel: "html_form"
+  };
+
+  const lineItems = [];
+  SCHEMA.food_groups.forEach(g=>{
+    const items = SCHEMA.countries[country].item_lists[g.id] || [];
+    items.forEach(([itemId,label,unit])=>{
+      const priceEl = document.getElementById(`price-${fieldId(g.id,itemId)}`);
+      if (priceEl.value !== ""){
+        lineItems.push({
+          form_id: formId, food_group_id: g.id, item_id: itemId,
+          item_label: label, unit: unit, price: parseFloat(priceEl.value),
+          is_write_in: false, notes: ""
+        });
+      }
+    });
+    for (let slot=0; slot<SCHEMA.write_in_slots_per_group; slot++){
+      const wid = `${g.id}__wi${slot}`;
+      const name = document.getElementById(`winame-${wid}`).value.trim();
+      if (name === "") continue;
+      const unit = document.getElementById(`wiunit-${wid}`).value.trim();
+      const priceVal = document.getElementById(`wiprice-${wid}`).value;
+      lineItems.push({
+        form_id: formId, food_group_id: g.id, item_id: null,
+        item_label: name, unit: unit, price: priceVal === "" ? null : parseFloat(priceVal),
+        is_write_in: true, notes: ""
+      });
+    }
+  });
+
+  return { submission, lineItems };
+}
+
+let downloadsApi = null;
+(async () => {
+  try {
+    downloadsApi = (window.claude && window.claude.use) ? await window.claude.use("downloads") : null;
+  } catch (e) { downloadsApi = null; }
+})();
+
+function showFallbackExport(filename, content){
+  document.getElementById("fallbackFilename").textContent = filename;
+  const ta = document.getElementById("fallbackText");
+  ta.value = content;
+  document.getElementById("copyStatus").hidden = true;
+  const card = document.getElementById("fallbackCard");
+  card.hidden = false;
+  card.scrollIntoView({behavior:"smooth", block:"center"});
+}
+
+async function offerDownload(filename, content){
+  if (downloadsApi){
+    try {
+      await downloadsApi.save({ filename, data: content });
+      return;
+    } catch (err){
+      if (err && err.code === "declined") return; // viewer said no; nothing else to do
+      // any other outcome (unavailable, rate_limited, etc.) falls through to the copy box
+    }
+  }
+  showFallbackExport(filename, content);
+}
+
+function toCsv(rows, columns){
+  const esc = v => {
+    if (v === null || v === undefined) return "";
+    const s = String(v);
+    return /[",\n]/.test(s) ? `"${s.replace(/"/g,'""')}"` : s;
+  };
+  const lines = [columns.join(",")];
+  rows.forEach(r=> lines.push(columns.map(c=>esc(r[c])).join(",")));
+  return lines.join("\n");
+}
+
+let lastAssembled = null;
+
+function showReview(){
+  const { submission, lineItems } = assembleSubmission();
+  lastAssembled = { submission, lineItems };
+  const grid = document.getElementById("summaryGrid");
+  grid.innerHTML = "";
+  const rows = [
+    ["Form ID", submission.form_id],
+    ["Market / Location", submission.market_location],
+    ["Vendor / Stall ID", submission.vendor_stall_id],
+    ["Region / District", submission.region_district],
+    ["Country", submission.country],
+    ["Date", submission.date],
+    ["Currency", submission.currency],
+    ["Collected by", submission.collected_by || "—"],
+    ["Items entered", lineItems.length],
+  ];
+  rows.forEach(([k,v])=>{
+    grid.innerHTML += `<div class="k">${k}</div><div class="v">${v}</div>`;
+  });
+  document.getElementById("formView").hidden = true;
+  document.getElementById("bottombar").hidden = true;
+  document.getElementById("review").style.display = "block";
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+document.getElementById("countryToggle").addEventListener("click",(e)=>{
+  const btn = e.target.closest("button[data-country]");
+  if (!btn || btn.classList.contains("active")) return;
+  if (document.getElementById("itemCount").textContent !== "0" &&
+      !confirm("Switching country clears the items you've entered (the two forms track different items). Continue?")) return;
+  country = btn.dataset.country;
+  [...document.getElementById("countryToggle").children].forEach(b=>{
+    b.classList.toggle("active", b === btn);
+    b.setAttribute("aria-selected", b === btn ? "true" : "false");
+  });
+  buildHeaderFields();
+  buildGroups();
+  updateCounts();
+});
+
+document.getElementById("reviewBtn").addEventListener("click", ()=>{
+  if (!validateHeader()){
+    document.querySelector(".field.invalid input")?.scrollIntoView({behavior:"smooth", block:"center"});
+    return;
+  }
+  showReview();
+});
+
+document.getElementById("backToForm").addEventListener("click", ()=>{
+  document.getElementById("formView").hidden = false;
+  document.getElementById("bottombar").hidden = false;
+  document.getElementById("review").style.display = "none";
+});
+
+document.getElementById("downloadJson").addEventListener("click", ()=>{
+  const payload = { submissions: [lastAssembled.submission], line_items: lastAssembled.lineItems };
+  offerDownload(`${lastAssembled.submission.form_id}.json`, JSON.stringify(payload, null, 2));
+});
+
+document.getElementById("downloadCsv").addEventListener("click", async ()=>{
+  const subCsv = toCsv([lastAssembled.submission],
+    ["form_id","market_location","vendor_stall_id","region_district","country","date","currency","collected_by","source_channel"]);
+  const liCsv = toCsv(lastAssembled.lineItems,
+    ["form_id","food_group_id","item_id","item_label","unit","price","is_write_in","notes"]);
+  const formId = lastAssembled.submission.form_id;
+  if (downloadsApi){
+    try {
+      await downloadsApi.save({ filename: `${formId}_submissions.csv`, data: subCsv });
+      await downloadsApi.save({ filename: `${formId}_line_items.csv`, data: liCsv });
+      return;
+    } catch (err){
+      if (err && err.code === "declined") return;
+      // fall through to the combined copy box below
+    }
+  }
+  showFallbackExport(
+    `${formId}_submissions.csv and ${formId}_line_items.csv`,
+    `# ${formId}_submissions.csv\n${subCsv}\n\n# ${formId}_line_items.csv\n${liCsv}`
+  );
+});
+
+document.getElementById("copyFallback").addEventListener("click", async ()=>{
+  const ta = document.getElementById("fallbackText");
+  const status = document.getElementById("copyStatus");
+  try {
+    await navigator.clipboard.writeText(ta.value);
+  } catch (e) {
+    ta.select();
+    document.execCommand("copy");
+  }
+  status.hidden = false;
+});
+
+buildHeaderFields();
+buildGroups();
+attachRowBehavior();
+updateCounts();
+</script>
