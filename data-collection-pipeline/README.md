@@ -6,9 +6,10 @@ Part of the WiD Datathon 2026 project.
   * via a digital form
   * or a printed paper form,
 * extracts paper-form submissions automatically (checkbox marks +
-handwritten prices), and
-* includes a human review step and
-* a feedback loop that turns operator corrections into training data for two small classifiers that can be used to retrin the model to recognize handwriting samples from the target country.
+handwritten prices),
+* and includes:
+  * a human review step
+  * and a feedback loop that turns operator corrections into training data for two small classifiers which can be used to retrin the model to better recognize handwriting samples from the target country.
 
 ## Folder layout
 
