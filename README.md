@@ -1,34 +1,63 @@
-# Women in Data Datathon 2026
+# Hoos' Cooking
 
-## Exploration
+**A country-owned pathway from local food-price observations to nutrition-aware decision support.**
 
-Gina - My starting direction was healthy diet affordability across countries, using a nutrition and economic lens.
-I was also going to explore the nutrition trade-off question -
-  Where is sufficient food energy available but diet quality or micronutrient adequacy still weak?
+Hoos' Cooking connects two complementary prototypes:
 
-Lastly, I thought we would all come up with a 3rd question to look at once we saw where the data led us.
+1. **Local collection and review.** A country can collect food-price observations with a digital form or a printable paper form, extract fields from scanned paper submissions, and require human review before records are approved.
+2. **Local monitoring and decision support.** The dashboard uses reviewed, structured data to compare food prices across locations and dates, surface lower-cost candidates, and show nutrition guardrails before any human decision.
 
-Virginia - I began by looking at childhood malnutrition and its lifelong consequences, which traced back to poverty as a leading driver. That pointed to a data gap: FAO and other UN bodies have flagged real-time, subnational retail food price data as necessary for tracking healthy diet affordability, but it's largely unavailable at the country level. My work became building a pipeline to collect that data directly and turn corrections into training data for it — see the [pipeline folder](https://github.com/gmancuso82/women-in-data-2026-datathon/blob/main/data-collection-pipeline/README.md) for details.
+The project starts with the macro context of healthy-diet affordability and moves to the micro reality of local markets, food culture, geography, seasonal conditions, and technology access.
 
-## Our analytic process
+The motivation is maternal and child nutrition: reliable access to affordable, nutrient-rich foods is one important food-access pathway, alongside health, sanitation, caregiving, and household income.
 
-The project follows one feedback loop: childhood malnutrition and poverty reinforce each other, and the data needed to break that cycle is exactly the data that's hardest to get.
+## Live prototype
 
-1. **Childhood malnutrition ↔ poverty** — malnutrition's effects on a child last a lifetime, and poverty is a leading driver of it.
-2. **Poverty → unaffordable diets** — poverty is why a nutritionally adequate diet is out of reach.
-3. **→ FAO data limitations** — the country-level, real-time price data needed to track this is largely unavailable.
-4. **→ better data collection tools** — this project's pipeline addresses that gap directly.
-5. **→ better data = better outcomes + community empowerment** — locally-run collection builds capacity, not just numbers.
-6. **→ nutritional swaps enable resilience** — better data supports low-cost substitutions that help households absorb price shocks.
-7. **→ back to childhood nutrition** — closing the loop.
+[Open the public dashboard](https://gmancuso82.github.io/women-in-data-2026-datathon/)
 
-![Analytic process diagram](data-collection-pipeline/Slide7.jpg)
+The current dashboard demonstrates the decision layer with historical, official data. The collection pipeline demonstrates how countries can build a more timely, locally owned source of reviewed records. Connecting approved pipeline records to automated dashboard refreshes is a next integration step.
 
-## Project structure
+## What the pilot demonstrates
 
-- `data/raw/` — original downloaded data; do not modify it.
-- `data/processed/` — cleaned, analysis-ready data.
-- `notebooks/` — exploration and analysis notebooks.
-- `src/` — reusable analysis code.
-- `outputs/` — charts and presentation-ready results.
-- `notes/` — research questions, decisions, and source notes.
+### Colombia market comparison
+
+- Official DANE SIPSA wholesale market-price observations
+- Bogotá, Medellín, and Montería
+- Four sampled dates in 2025
+- An eight-food shared basket directly comparable across all three markets
+- A transparent price-and-nutrition comparison for the verified carrot and ahuyama orange-vegetable role
+
+These are wholesale price observations and an equal-weight reference basket. They are **not** household retail prices or a subnational Cost of a Healthy Diet calculation.
+
+### Nigeria portability check
+
+- Nigeria National Bureau of Statistics Selected Food Price Watch
+- Zone-level monthly averages for March through May 2026
+- Beans Brown and Garri white, both reported on a 1 kg basis
+
+This check shows the monitoring structure can retain a different country, currency, source format, and geography level. It remains price-only until nutrition profiles are reviewed.
+
+### Local collection pipeline
+
+The collection pipeline supports digital and printable-paper intake, scan/photo extraction, human review, and a correction-feedback loop. It is a proof of concept for a country-run data-collection process; it does not claim a fully deployed live national system.
+
+## Decision-support guardrails
+
+- The dashboard does not diagnose shortages, weather events, or supply-chain causes.
+- A lower-cost candidate is not an automatic food substitution or dietary recommendation.
+- Nutrition and program experts remain responsible for policy and program decisions.
+- Foods without verified nutrition matches stay in a review state rather than generating a recommendation.
+
+## Repository guide
+
+- [`data-collection-pipeline/`](data-collection-pipeline/) — country-run collection, extraction, review, and feedback-loop prototype.
+- [`colombia_sipsa_pilot/`](colombia_sipsa_pilot/) — reproducible Colombia and Nigeria validation data, scripts, and the public dashboard.
+- [`docs/PROJECT_SCOPE.md`](docs/PROJECT_SCOPE.md) — methods, evidence, limitations, and next integration step.
+- [`docs/PRESENTATION_SCRIPT.md`](docs/PRESENTATION_SCRIPT.md) — competition presentation talk track and demo sequence.
+
+## Core sources
+
+- DANE SIPSA wholesale market-price workbooks, Colombia
+- Nigeria National Bureau of Statistics Selected Food Price Watch, March-May 2026
+- Instituto Colombiano de Bienestar Familiar, Tabla de Composición de Alimentos Colombianos 2018
+- FAOSTAT Cost and Affordability of a Healthy Diet context

@@ -1,28 +1,27 @@
-# Local dashboard
+# Local Healthy Food Swap Monitor
 
-Open `index.html` in a web browser to use the current prototype. Choose a locality and collection date to inspect the price action and the nutrition tradeoff.
+The dashboard is a static, browser-based decision-support prototype published through GitHub Pages.
 
-## Local price-sheet intake
+## What is interactive
 
-The **Add more current local evidence** panel accepts a searchable or scanned PDF price sheet. It extracts what it can, presents editable locality/date/market/food/unit/price fields, and requires a person to review them before saving structured rows locally in that browser. The original PDF is not retained.
+- Select a Colombian locality and collection date to update the lower-cost orange-vegetable comparison and its nutrition tradeoff.
+- Review the three-market shared-basket totals for the selected date.
+- Select a Nigeria food to view zone-level price ranges across three monthly reports.
 
-Use the two synthetic files in `../test_files/` to demonstrate the two paths:
+## What the dashboard demonstrates
 
-- `digital_price_sheet.pdf` - direct text extraction
-- `scanned_price_sheet.pdf` - browser-side OCR, then review
+The Colombia section uses official DANE SIPSA **wholesale** price observations. It is a local market-price proxy, not a household retail Cost of a Healthy Diet calculation. The nutrition view compares the verified raw edible-portion profiles for carrot and ahuyama and explains why a lower-cost candidate appears.
 
-The prototype currently loads open-source PDF/OCR tools when it opens. For a low-connectivity production setting, the OCR engine and language data would be bundled locally.
+The Nigeria section validates portability across a different country, currency, source format, and geography level. It is price-only because those food labels do not yet have reviewed nutrition profiles.
 
-The dashboard displays a **price comparison**, not cost per nutrient. It blocks fresh-corn recommendations because the market-product and edible-nutrition units have not yet been reconciled.
+## Guardrails
 
-## Public preview
+- The dashboard does not diagnose the cause of a price difference.
+- It does not make automatic substitutions or provide dietary advice.
+- Fresh corn is blocked from nutrition claims until whole-cob market-price units and edible-kernel nutrition units are reconciled.
+- New local observations from the separate collection pipeline are not automatically ingested into this static prototype yet.
 
-The GitHub Pages workflow publishes this dashboard for live review. Its browser-based PDF/OCR tools load when the dashboard opens.
+## Local use
 
-Before presenting the pilot, rerun these two scripts after changing price or nutrition data:
+Open `index.html` in a browser. GitHub Pages publishes the same static prototype for public review.
 
-```bash
-python src/build_orange_vegetable_actions.py
-```
-
-Then update the small `dashboard_data.js` dataset or replace it with an automated export step.
