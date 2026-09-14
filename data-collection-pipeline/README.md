@@ -46,7 +46,7 @@ python3 forms/extract_paper_form.1.5.py --batch <folder_of_pdfs> \
     <output_basename>
 ```
 
-See `forms/pipeline_hub.*.html` for the full collect → extract → review →
+See `pipeline_hub.*.html` for the full collect → extract → review →
 ingest walkthrough with copy-paste commands, or open `demo/demo_review.html`
 directly for a working example with no setup.
 
