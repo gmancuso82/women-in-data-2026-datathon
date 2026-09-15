@@ -58,6 +58,7 @@ The collection pipeline supports digital and printable-paper intake, scan/photo 
 - [`colombia_sipsa_pilot/`](colombia_sipsa_pilot/) — reproducible Colombia and Nigeria validation data, scripts, and the public dashboard.
 - [`colombia_sipsa_pilot/notebooks/`](colombia_sipsa_pilot/notebooks/) — two clean, runnable analysis notebooks for Colombia evidence and Nigeria portability validation.
 - [`docs/PROJECT_SCOPE.md`](docs/PROJECT_SCOPE.md) — methods, evidence, limitations, and next integration step.
+- [`docs/IMPLEMENTATION_PLAYBOOK.md`](docs/IMPLEMENTATION_PLAYBOOK.md) — country-owned collection-to-decision workflow and operational guardrails.
 - [`docs/PRESENTATION_SCRIPT.md`](docs/PRESENTATION_SCRIPT.md) — competition presentation talk track and demo sequence.
 - [`REPRODUCE.md`](REPRODUCE.md) — quick reviewer path for the live prototypes and analysis notebooks.
 
