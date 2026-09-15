@@ -25,5 +25,6 @@ The public dashboard is a historical-data decision-support prototype. The separa
 - [`THREE_MARKET_VALIDATION.md`](THREE_MARKET_VALIDATION.md) — three-city shared-basket evidence and interpretation limits.
 - [`NIGERIA_NBS_VALIDATION.md`](NIGERIA_NBS_VALIDATION.md) — portability validation and price-only guardrail.
 - [`data/nutrition_lookup.csv`](data/nutrition_lookup.csv) — nutrition match status and source notes.
+- [`notebooks/`](notebooks/) — clean, runnable notebooks for the Colombia price-and-swap evidence and Nigeria portability validation.
 - [`dashboard/`](dashboard/) — static dashboard published through GitHub Pages.
 - [`src/`](src/) — reproducible data-build and analysis scripts.
