@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - "colombia_sipsa_pilot/dashboard/**"
+      - "data-collection-pipeline/**"
       - ".github/workflows/publish-dashboard.yml"
   workflow_dispatch:
 
@@ -30,10 +31,29 @@ jobs:
       - name: Prepare GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload dashboard
+      - name: Prepare public site
+        run: |
+          mkdir -p _site/data-collection-pipeline
+          cp -R colombia_sipsa_pilot/dashboard/. _site/
+          cp -R data-collection-pipeline/. _site/data-collection-pipeline/
+          cat > _site/data-collection-pipeline/index.html <<'HTML'
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta http-equiv="refresh" content="0; url=pipeline_hub.1.1.html">
+            <title>Hoos' Cooking Data Pipeline</title>
+          </head>
+          <body>
+            <p>Opening the <a href="pipeline_hub.1.1.html">Hoos' Cooking data-collection pipeline</a>…</p>
+          </body>
+          </html>
+          HTML
+
+      - name: Upload public site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: colombia_sipsa_pilot/dashboard
+          path: _site
 
       - name: Deploy dashboard
         id: deployment
