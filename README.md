@@ -14,6 +14,7 @@ The motivation is maternal and child nutrition: reliable access to affordable, n
 ## Live prototype
 
 [Open the public dashboard](https://gmancuso82.github.io/women-in-data-2026-datathon/)
+[Open the data-collection pipeline hub](https://gmancuso82.github.io/women-in-data-2026-datathon/data-collection-pipeline/pipeline_hub.1.1.html)
 
 The current dashboard demonstrates the decision layer with historical, official data. The collection pipeline demonstrates how countries can build a more timely, locally owned source of reviewed records. Connecting approved pipeline records to automated dashboard refreshes is a next integration step.
 
